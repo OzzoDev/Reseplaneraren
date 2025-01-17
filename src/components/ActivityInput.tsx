@@ -2,22 +2,23 @@ import { Activity } from "../types/types";
 
 interface Props {
   name: string;
+  value:string;
   labelText:string,
-  activities: Activity[];
-  setActivities: (activities: Activity[]) => void;
+  localActivities: Activity;
+  setLocalActivites: (activities: Activity) => void;
 }
 
-export default function ActivityInput({name,labelText,activities,setActivities}: Props) {
+export default function ActivityInput({name,value,labelText,localActivities,setLocalActivites}: Props) {
   
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const newActivites = { ...activities, [name]: value };
-    setActivities(newActivites);
-  };
+    const newActivites = { ...localActivities, [name]: value };
+    setLocalActivites(newActivites);
+};
 
   return (
     <div className="input-container">
-        <input type="text" name={name} onChange={handleChange} className="activity-input"/>
+        <input type="text" name={name} value={value} onChange={handleChange} className="activity-input" autoCorrect="off" autoComplete="off" required/>
         <label>{labelText}</label>
     </div>
   );

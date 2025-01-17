@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Activity } from "../types/types";
 import ActivityDateInput from "./ActivityDateInput";
 import ActivityInput from "./ActivityInput";
@@ -8,16 +9,21 @@ interface Props{
 }
 
 export default function ActivityForm({activities,setActivities}:Props){
+    const [localActivities, setLocalActivites] = useState<Activity>({activity:"",place:"",date:""});
 
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>)=>{
-
+        e.preventDefault();
+        const updatedActivities = [...activities, localActivities];
+        setActivities(updatedActivities);
+        setLocalActivites({activity:"",place:"",date:""});
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <ActivityInput labelText="Activity" name="activity" activities={activities} setActivities={setActivities}/>
-            <ActivityInput labelText="Where" name="place" activities={activities} setActivities={setActivities}/>
-            <ActivityDateInput labelText="When" activities={activities} setActivities={setActivities}/>
+            <ActivityInput labelText="Activity" name="activity" value={localActivities.activity} localActivities={localActivities} setLocalActivites={setLocalActivites}/>
+            <ActivityInput labelText="Where" name="place" value={localActivities.place} localActivities={localActivities} setLocalActivites={setLocalActivites}/>
+            <ActivityDateInput labelText="When" value={localActivities.date} localActivities={localActivities} setLocalActivites={setLocalActivites}/>
+            <button>Add</button>
         </form>
     )
 }
