@@ -6,6 +6,23 @@ interface Props {
   setActivities: (activities: Activity[]) => void;
 }
 
+/**
+ * A component that displays a list of activities.
+ * Allows for deleting and editing activities.
+ *
+ * @param {Props} props - The properties for the component.
+ * @param {Activity[]} props.activities - The array of activities to display.
+ * @param {(activities: Activity[]) => void} props.setActivities - Function to update the activities.
+ *
+ * @returns {JSX.Element} The rendered list of activities.
+ *
+ * @example
+ * <ActivityList
+ *   activities={activities}
+ *   setActivities={setActivities}
+ * />
+ */
+
 export default function ActivityList({ activities, setActivities }: Props) {
   const handleDeleteActivity = (activity: Activity) => {
     const updatedActivities = activities.filter((act) => {

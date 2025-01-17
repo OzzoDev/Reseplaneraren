@@ -10,6 +10,25 @@ interface Props {
   editActivity: (activity: Activity) => void;
 }
 
+/**
+ * A component that displays an individual activity item.
+ * Allows for editing and deleting the activity.
+ *
+ * @param {Props} props - The properties for the component.
+ * @param {Activity} props.activity - The activity object to display.
+ * @param {(activity: Activity) => void} props.deleteActivity - Function to delete the activity.
+ * @param {(activity: Activity) => void} props.editActivity - Function to edit the activity.
+ *
+ * @returns {JSX.Element} The rendered activity item.
+ *
+ * @example
+ * <ActivityItem
+ *   activity={activity}
+ *   deleteActivity={handleDeleteActivity}
+ *   editActivity={handleEditActivity}
+ * />
+ */
+
 export default function ActivityItem({
   activity,
   deleteActivity,

@@ -9,6 +9,22 @@ interface Props {
   setActivities: (activities: Activity[]) => void;
 }
 
+/**
+ * A form component for adding new activities.
+ *
+ * @param {Props} props - The properties for the component.
+ * @param {Activity[]} props.activities - The current array of activities.
+ * @param {(activities: Activity[]) => void} props.setActivities - Function to update the activities.
+ *
+ * @returns {JSX.Element} The rendered form for adding activities.
+ *
+ * @example
+ * <ActivityForm
+ *   activities={activities}
+ *   setActivities={setActivities}
+ * />
+ */
+
 export default function ActivityForm({ activities, setActivities }: Props) {
   const [localActivities, setLocalActivites] = useState<Activity>({
     activity: "",
