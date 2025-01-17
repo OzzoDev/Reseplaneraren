@@ -65,7 +65,7 @@ export default function ActivityItem({
       <form
         onSubmit={handleEdit}
         ref={editFormRef}
-        className="flex flex-col space-y-2 w-full">
+        className="flex flex-col items-center space-y-2 w-full">
         <EditableText
           tag="h3"
           name="activity"
@@ -90,12 +90,12 @@ export default function ActivityItem({
         />
         <button
           type="submit"
-          className="bg-blue-500 text-white font-bold py-2 rounded hover:bg-blue-600 transition duration-200">
+          className="bg-blue-500 text-white font-bold py-2 px-10 rounded hover:bg-blue-600 transition duration-200">
           {isEditing ? <IoCheckmarkOutline /> : <FaRegEdit />}
         </button>
         <button
           onClick={handleDelete}
-          className="bg-red-500 text-white font-bold py-2 rounded hover:bg-red-600 transition duration-200">
+          className="bg-red-500 text-white font-bold py-2 px-10 rounded hover:bg-red-600 transition duration-200">
           <IoTrashOutline />
         </button>
       </form>

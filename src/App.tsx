@@ -4,21 +4,12 @@ import ActivityPage from "./pages/ActivityPage";
 import { Activity } from "./types/types";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { ACTIVITES_KEY } from "./constants/contants";
-import { useEffect } from "react";
 
 function App() {
   const [activities, setActivities] = useLocalStorage<Activity[]>(
     ACTIVITES_KEY,
     []
   );
-
-  useEffect(() => {
-    setActivities((prevActivites) =>
-      prevActivites.sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-      )
-    );
-  }, [activities]);
 
   return (
     <BrowserRouter>

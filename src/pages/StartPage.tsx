@@ -27,7 +27,7 @@ export default function StartPage({ activities, setActivities }: Props) {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-400">
       <ActivityForm activities={activities} setActivities={setActivities} />
-      <PageLink path="/activities" />
+      <PageLink path="/activities" text="See my activites" />
     </div>
   );
 }

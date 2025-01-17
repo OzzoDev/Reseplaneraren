@@ -38,7 +38,7 @@ export default function ActivityForm({ activities, setActivities }: Props) {
     const updatedActivities: Activity[] = [
       ...activities,
       { ...localActivities, id: generateID(activities) },
-    ];
+    ].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     setActivities(updatedActivities);
     setLocalActivites({ activity: "", place: "", date: "", id: -1 });

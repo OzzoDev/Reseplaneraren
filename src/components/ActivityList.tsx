@@ -25,20 +25,26 @@ interface Props {
 
 export default function ActivityList({ activities, setActivities }: Props) {
   const handleDeleteActivity = (activity: Activity) => {
-    const updatedActivities = activities.filter((act) => {
-      return act.id !== activity.id;
-    });
+    const updatedActivities = activities
+      .filter((act) => {
+        return act.id !== activity.id;
+      })
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+    console.log("On del: ", updatedActivities);
 
     setActivities(updatedActivities);
   };
 
   const handleEditActivity = (activity: Activity) => {
-    const updatedActivities = activities.map((act) => {
-      if (act.id === activity.id) {
-        return activity;
-      }
-      return act;
-    });
+    const updatedActivities = activities
+      .map((act) => {
+        if (act.id === activity.id) {
+          return activity;
+        }
+        return act;
+      })
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     setActivities(updatedActivities);
   };
