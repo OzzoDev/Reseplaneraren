@@ -49,18 +49,26 @@ export default function ActivityList({ activities, setActivities }: Props) {
     setActivities(updatedActivities);
   };
 
+  const noActivities = activities.length === 0;
+
   return (
-    <ul className="flex flex-col p-8 bg-white rounded-lg shadow-md mx-auto max-w-lg w-full space-y-4">
-      {activities.map((activity) => {
-        return (
-          <ActivityItem
-            key={activity.id}
-            activity={activity}
-            deleteActivity={handleDeleteActivity}
-            editActivity={handleEditActivity}
-          />
-        );
-      })}
-    </ul>
+    <>
+      {noActivities ? (
+        <h2 className="text-5xl">No activites!</h2>
+      ) : (
+        <ul className="flex flex-col p-8 bg-white rounded-lg shadow-md mx-auto max-w-lg w-full space-y-4">
+          {activities.map((activity) => {
+            return (
+              <ActivityItem
+                key={activity.id}
+                activity={activity}
+                deleteActivity={handleDeleteActivity}
+                editActivity={handleEditActivity}
+              />
+            );
+          })}
+        </ul>
+      )}
+    </>
   );
 }
