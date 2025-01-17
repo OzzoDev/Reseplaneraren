@@ -44,18 +44,21 @@ export default function ActivityInput({
   };
 
   return (
-    <div className="input-container">
+    <div className="flex flex-col mb-4">
+      <label className="mb-1 text-gray-700 font-medium" htmlFor={name}>
+        {labelText}
+      </label>
       <input
         type="text"
         name={name}
+        id={name}
         value={value}
         onChange={handleChange}
-        className="activity-input"
+        className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         autoCorrect="off"
         autoComplete="off"
         required
       />
-      <label>{labelText}</label>
     </div>
   );
 }

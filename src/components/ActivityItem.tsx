@@ -61,8 +61,11 @@ export default function ActivityItem({
   };
 
   return (
-    <li className="activity-item">
-      <form onSubmit={handleEdit} ref={editFormRef}>
+    <li className="flex justify-between items-center p-4 bg-white rounded-lg shadow-md mb-2">
+      <form
+        onSubmit={handleEdit}
+        ref={editFormRef}
+        className="flex flex-col space-y-2 w-full">
         <EditableText
           tag="h3"
           name="activity"
@@ -85,13 +88,17 @@ export default function ActivityItem({
           inputType="date"
           onChange={handleChange}
         />
-        <button type="submit">
+        <button
+          type="submit"
+          className="bg-blue-500 text-white font-bold py-2 rounded hover:bg-blue-600 transition duration-200">
           {isEditing ? <IoCheckmarkOutline /> : <FaRegEdit />}
         </button>
+        <button
+          onClick={handleDelete}
+          className="bg-red-500 text-white font-bold py-2 rounded hover:bg-red-600 transition duration-200">
+          <IoTrashOutline />
+        </button>
       </form>
-      <button onClick={handleDelete}>
-        <IoTrashOutline />
-      </button>
     </li>
   );
 }

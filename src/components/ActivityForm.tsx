@@ -45,7 +45,10 @@ export default function ActivityForm({ activities, setActivities }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col p-8 bg-white rounded-lg shadow-md mx-auto max-w-lg w-full space-y-4">
+      <h2 className="text-2xl font-semibold text-center">Add New Activity</h2>
       <ActivityInput
         labelText="Activity"
         name="activity"
@@ -66,7 +69,11 @@ export default function ActivityForm({ activities, setActivities }: Props) {
         localActivities={localActivities}
         setLocalActivites={setLocalActivites}
       />
-      <button>Add</button>
+      <button
+        type="submit"
+        className="w-full bg-blue-500 text-white font-bold py-3 rounded hover:bg-blue-600 transition duration-200">
+        Add
+      </button>
     </form>
   );
 }

@@ -40,16 +40,19 @@ export default function ActivityDateInput({
   };
 
   return (
-    <div className="input">
+    <div className="flex flex-col mb-4">
+      <label className="mb-1 text-gray-700 font-medium" htmlFor="date">
+        {labelText}
+      </label>
       <input
         type="date"
         name="date"
+        id="date"
         value={value}
         onChange={handleChange}
-        className="input"
+        className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         required
       />
-      <label>{labelText}</label>
     </div>
   );
 }

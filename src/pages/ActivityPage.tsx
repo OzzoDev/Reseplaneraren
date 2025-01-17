@@ -1,6 +1,6 @@
 import ActivityList from "../components/ActivityList";
+import PageLink from "../components/PageLink";
 import { Activity } from "../types/types";
-import { Link } from "react-router-dom";
 
 interface Props {
   activities: Activity[];
@@ -25,9 +25,9 @@ interface Props {
 
 export default function ActivityPage({ activities, setActivities }: Props) {
   return (
-    <>
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-400">
       <ActivityList activities={activities} setActivities={setActivities} />
-      <Link to="/">Add activities</Link>
-    </>
+      <PageLink path="/activities" />
+    </div>
   );
 }

@@ -40,7 +40,7 @@ export default function EditableText({
   onChange,
 }: Props) {
   return (
-    <div>
+    <div className="flex items-center">
       {isEditing ? (
         <input
           type={inputType}
@@ -51,9 +51,10 @@ export default function EditableText({
           required
           autoComplete="off"
           autoCorrect="off"
+          className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       ) : (
-        <Tag>{value}</Tag>
+        <Tag className="text-gray-800 font-semibold">{value}</Tag>
       )}
     </div>
   );

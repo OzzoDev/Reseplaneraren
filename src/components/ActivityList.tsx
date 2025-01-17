@@ -44,7 +44,7 @@ export default function ActivityList({ activities, setActivities }: Props) {
   };
 
   return (
-    <ul className="activity-list">
+    <ul className="flex flex-col p-8 bg-white rounded-lg shadow-md mx-auto max-w-lg w-full space-y-4">
       {activities.map((activity) => {
         return (
           <ActivityItem

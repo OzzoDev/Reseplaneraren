@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
 import ActivityForm from "../components/ActivityForm";
 import { Activity } from "../types/types";
+import PageLink from "../components/PageLink";
 
 interface Props {
   activities: Activity[];
@@ -25,9 +25,9 @@ interface Props {
 
 export default function StartPage({ activities, setActivities }: Props) {
   return (
-    <>
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-400">
       <ActivityForm activities={activities} setActivities={setActivities} />
-      <Link to="/activities">See my activities</Link>
-    </>
+      <PageLink path="/activities" />
+    </div>
   );
 }
