@@ -25,10 +25,6 @@ export default function ActivityItem({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const editedActivity = { ...localActivity, [name]: value };
-    console.log(e);
-    console.log(name, value);
-    console.log("Edited: ", editedActivity);
-
     setLocalActivity(editedActivity);
   };
 

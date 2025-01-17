@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Activity } from "../types/types";
 import ActivityDateInput from "./ActivityDateInput";
 import ActivityInput from "./ActivityInput";
-import { genereateID } from "../utils/utils";
+import { generateID } from "../utils/utils";
 
 interface Props {
   activities: Activity[];
@@ -19,7 +19,11 @@ export default function ActivityForm({ activities, setActivities }: Props) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const updatedActivities = [...activities, { ...localActivities, id: genereateID(activities) }];
+    const updatedActivities: Activity[] = [
+      ...activities,
+      { ...localActivities, id: generateID(activities) },
+    ];
+
     setActivities(updatedActivities);
     setLocalActivites({ activity: "", place: "", date: "", id: -1 });
   };
