@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Activity } from "../types/types";
 import { IoCheckmarkOutline, IoTrashOutline } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
 import EditableText from "./EditableText";
+import useOutsideClick from "../hooks/useOutsideClick";
 
 interface Props {
   activity: Activity;
@@ -36,6 +37,12 @@ export default function ActivityItem({
 }: Props) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [localActivity, setLocalActivity] = useState<Activity>(activity);
+  const editFormRef = useRef<HTMLFormElement | null>(null);
+
+  useOutsideClick(editFormRef, () => {
+    setIsEditing(false);
+    setLocalActivity(activity);
+  });
 
   const handleDelete = () => {
     deleteActivity(activity);
@@ -55,7 +62,7 @@ export default function ActivityItem({
 
   return (
     <li className="activity-item">
-      <form onSubmit={handleEdit}>
+      <form onSubmit={handleEdit} ref={editFormRef}>
         <EditableText
           tag="h3"
           name="activity"
