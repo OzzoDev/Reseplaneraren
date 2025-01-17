@@ -1,5 +1,6 @@
 export type Activity = {
-    activity:string,
-    place:string,
-    date:string,
-}
+  id: number;
+  activity: string;
+  place: string;
+  date: string;
+};
