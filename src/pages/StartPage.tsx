@@ -1,3 +1,12 @@
-export default function StartPage(){
-    return <div>Start</div>
+import ActivityForm from "../components/ActivityForm";
+import { Activity } from "../types/types"
+
+interface Props{
+    activities:Activity[], 
+    setActivities:(activities:Activity[])=>void;
+}
+
+export default function StartPage({activities,setActivities}:Props){
+
+    return <ActivityForm activities={activities} setActivities={setActivities}/>
 }
