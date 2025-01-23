@@ -7,7 +7,8 @@ thorough way to practice core concepts of react such as components, props, state
 
 ### Set up
 
--Clone repo
+- Clone repo
+- cd reseplaneraren
 
 ### Installation
 
