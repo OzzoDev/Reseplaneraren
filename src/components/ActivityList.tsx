@@ -31,8 +31,6 @@ export default function ActivityList({ activities, setActivities }: Props) {
       })
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-    console.log("On del: ", updatedActivities);
-
     setActivities(updatedActivities);
   };
 
