@@ -8,6 +8,8 @@ import Sort from "../components/Sort";
 
 interface Props {
   activities: Activity[];
+  sortOrder: number;
+  setSortOrder: (sortOrder: number) => void;
   setActivities: (activities: Activity[]) => void;
 }
 
@@ -26,7 +28,12 @@ interface Props {
  * />
  */
 
-export default function ActivityPage({ activities, setActivities }: Props) {
+export default function ActivityPage({
+  activities,
+  sortOrder,
+  setSortOrder,
+  setActivities,
+}: Props) {
   const [isSearchSuccessful, setIsSearchSuccessful] = useState<boolean>(searchSuccess(activities));
 
   useEffect(() => {
@@ -48,7 +55,9 @@ export default function ActivityPage({ activities, setActivities }: Props) {
   };
 
   const handleSortItems = (value: number) => {
-    sortActivities(value, activities, setActivities);
+    const sortedActivities = sortActivities(value, activities);
+    setActivities(sortedActivities);
+    setSortOrder(value);
   };
 
   return (
@@ -64,11 +73,13 @@ export default function ActivityPage({ activities, setActivities }: Props) {
             "Priority high-low",
             "Priority low-high",
           ]}
+          sortOrder={sortOrder}
           onChange={handleSortItems}
         />
       </div>
       <ActivityList
         activities={activities}
+        sortOrder={sortOrder}
         isSearchSuccessful={isSearchSuccessful}
         setActivities={setActivities}
       />

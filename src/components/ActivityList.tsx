@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
 import { Activity } from "../types/types";
 import { sortActivities } from "../utils/utils";
 import ActivityItem from "./ActivityItem";
 
 interface Props {
   activities: Activity[];
+  sortOrder: number;
   isSearchSuccessful: boolean;
   setActivities: (activities: Activity[]) => void;
 }
@@ -28,19 +28,12 @@ interface Props {
  * />
  */
 
-export default function ActivityList({ activities, isSearchSuccessful, setActivities }: Props) {
-  const [isSorted, setIsSorted] = useState<boolean>(false);
-
-  useEffect(() => {
-    sortActivities(0, activities, setActivities);
-  }, []);
-
-  useEffect(() => {
-    if (!isSorted) {
-      sortActivities(0, activities, setActivities);
-    }
-  }, [isSorted]);
-
+export default function ActivityList({
+  activities,
+  sortOrder,
+  isSearchSuccessful,
+  setActivities,
+}: Props) {
   const handleDeleteActivity = (activity: Activity) => {
     const updatedActivities = activities
       .filter((act) => {
@@ -59,8 +52,9 @@ export default function ActivityList({ activities, isSearchSuccessful, setActivi
       return act;
     });
 
-    setActivities(updatedActivities);
-    setIsSorted((prev) => !prev);
+    const sortedActivities = sortActivities(sortOrder, updatedActivities);
+
+    setActivities(sortedActivities);
   };
 
   const noActivities = activities.length === 0;
@@ -73,7 +67,7 @@ export default function ActivityList({ activities, isSearchSuccessful, setActivi
     return <h2 className="text-5xl text-white m-auto">No matching activites!</h2>;
   }
 
-  const filteredActivities = activities.filter((activitiy) => activitiy.isVisible);
+  const filteredActivities = activities.filter((activity) => activity.isVisible);
 
   return (
     <ul className="p-8 m-auto max-w-lg w-full space-y-4">

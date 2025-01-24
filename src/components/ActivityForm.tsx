@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Activity, Priority } from "../types/types";
 import ActivityDateInput from "./ActivityDateInput";
 import ActivityInput from "./ActivityInput";
@@ -10,6 +10,7 @@ import PrioritySelector from "./PrioritySelector";
 
 interface Props {
   activities: Activity[];
+  sortOrder: number;
   setActivities: (activities: Activity[]) => void;
 }
 
@@ -29,15 +30,9 @@ interface Props {
  * />
  */
 
-export default function ActivityForm({ activities, setActivities }: Props) {
+export default function ActivityForm({ activities, sortOrder, setActivities }: Props) {
   const [error, setError] = useState<string>("");
   const [localActivity, setLocalActivity] = useState<Activity>(defaultActivity);
-
-  useEffect(() => {
-    if (localActivity === defaultActivity) {
-      sortActivities(0, activities, setActivities);
-    }
-  }, [localActivity]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,7 +42,8 @@ export default function ActivityForm({ activities, setActivities }: Props) {
         ...activities,
         { ...localActivity, id: generateID(activities) },
       ];
-      setActivities(updatedActivities);
+      const sortedActivities = sortActivities(sortOrder, updatedActivities);
+      setActivities(sortedActivities);
       setLocalActivity(defaultActivity);
     } else {
       setError("Activity already exists");

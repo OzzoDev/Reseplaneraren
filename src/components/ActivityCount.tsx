@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function ActivityCount({ activites }: Props) {
-  const [animKey, setAnimKey] = useState<number>(0); // Unique key for animation reset
+  const [animationKey, setAnimationKey] = useState<number>(0);
   const prevNumberOfActivities = useRef<number>(activites.length);
 
   const numberOfActivites = activites.length;
@@ -15,21 +15,17 @@ export default function ActivityCount({ activites }: Props) {
 
   useEffect(() => {
     if (prevNumberOfActivities.current !== activites.length) {
-      console.log("Animating");
+      setAnimationKey((prev) => prev + 1);
 
-      // Change the key to force a re-render
-      setAnimKey((prev) => prev + 1);
-
-      // Update the reference for the previous number of activities
       prevNumberOfActivities.current = activites.length;
     }
   }, [activites]);
 
   return (
     <div
-      key={animKey} // Use the unique key here
+      key={animationKey}
       className={`flex flex-col justify-center items-center relative bg-sky-700 rounded-[10px] w-[46px] h-[46px] ${
-        animKey > 0 ? "motion-preset-confetti" : ""
+        animationKey > 0 ? "motion-preset-confetti" : ""
       }`}>
       <RiCalendarTodoFill size={26} color="white" />
       <p

@@ -45,8 +45,6 @@ export default function ActivityDateInput({
     const inputDate = new Date(value);
     const isValidDate = inputDate.toString() !== "Invalid Date" && inputDate >= today;
 
-    console.log(isValidDate);
-
     if (isValidDate) {
       const newActivities = { ...localActivities, [name]: value };
       setLocalActivites(newActivities);

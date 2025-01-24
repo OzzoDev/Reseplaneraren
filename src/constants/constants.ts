@@ -2,6 +2,7 @@ import { Activity, Priority } from "../types/types";
 import { currentDate } from "../utils/utils";
 
 export const ACTIVITES_KEY = "activites";
+export const SORT_ORDER = "sortOrder";
 
 export const priorityMap: Priority[] = [
   { prio: 0, color: "green" },

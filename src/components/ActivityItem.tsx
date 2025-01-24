@@ -74,8 +74,6 @@ export default function ActivityItem({ activity, deleteActivity, editActivity }:
   };
 
   const handleSetPriority = (priority: Priority) => {
-    console.log("Set to : ", priority);
-
     setLocalActivity((prevActivity) => ({
       ...prevActivity,
       priority,

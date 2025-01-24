@@ -16,11 +16,7 @@ export function isNewActivity(activitiy: Activity, activities: Activity[]): bool
   return !activities.some((act) => act.activity.toLowerCase() === activitiy.activity.toLowerCase());
 }
 
-export function sortActivities(
-  sortOption: number,
-  activities: Activity[],
-  setActivities: (activities: Activity[]) => void
-) {
+export function sortActivities(sortOption: number, activities: Activity[]) {
   let updatedActivities = [...activities];
 
   switch (sortOption) {
@@ -41,7 +37,7 @@ export function sortActivities(
       break;
   }
 
-  setActivities(updatedActivities);
+  return updatedActivities;
 }
 
 export function currentDate(): string {

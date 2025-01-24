@@ -5,6 +5,7 @@ import ActivityCount from "../components/ActivityCount";
 
 interface Props {
   activities: Activity[];
+  sortOrder: number;
   setActivities: (activities: Activity[]) => void;
 }
 
@@ -24,14 +25,14 @@ interface Props {
  * />
  */
 
-export default function StartPage({ activities, setActivities }: Props) {
+export default function StartPage({ activities, sortOrder, setActivities }: Props) {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-t from-slate-200 to-sky-900">
       <div className="flex items-center space-x-7 pl-2 py-3 w-full">
         <PageLink path="/activities" text="See my activites" />
         <ActivityCount activites={activities} />
       </div>
-      <ActivityForm activities={activities} setActivities={setActivities} />
+      <ActivityForm activities={activities} setActivities={setActivities} sortOrder={sortOrder} />
     </div>
   );
 }
