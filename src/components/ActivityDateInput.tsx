@@ -1,7 +1,7 @@
 import { Activity } from "../types/types";
 
 interface Props {
-  value: string;
+  inputValue: string;
   labelText: string;
   localActivities: Activity;
   setLocalActivites: (activities: Activity) => void;
@@ -11,7 +11,7 @@ interface Props {
  * A component for inputting a date associated with an activity.
  *
  * @param {Props} props - The properties for the component.
- * @param {string} props.value - The current date value for the input.
+ * @param {string} props.inputValue - The current date value for the input.
  * @param {string} props.labelText - The label text for the date input.
  * @param {Activity} props.localActivities - The current local activities object.
  * @param {(activities: Activity) => void} props.setLocalActivites - Function to update local activities.
@@ -28,15 +28,24 @@ interface Props {
  */
 
 export default function ActivityDateInput({
-  value,
+  inputValue,
   labelText,
   localActivities,
   setLocalActivites,
 }: Props) {
+  const today = new Date();
+  const formattedDate = today.toISOString().split("T")[0];
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const newActivites = { ...localActivities, [name]: value };
-    setLocalActivites(newActivites);
+    const inputDate = new Date(value);
+    const isValidDate =
+      inputDate.toString() !== "Invalid Date" && inputDate >= today;
+
+    if (isValidDate) {
+      const newActivities = { ...localActivities, [name]: value };
+      setLocalActivites(newActivities);
+    }
   };
 
   return (
@@ -48,8 +57,9 @@ export default function ActivityDateInput({
         type="date"
         name="date"
         id="date"
-        value={value}
+        value={inputValue}
         onChange={handleChange}
+        min={formattedDate}
         className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         required
       />

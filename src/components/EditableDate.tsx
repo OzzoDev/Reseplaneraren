@@ -16,7 +16,6 @@ interface Props {
  * @param {string} props.name - The name attribute for the input field.
  * @param {string} props.value - The current value of the editable text.
  * @param {string} props.text - The current text of the editable text.
- * @param {string} [props.inputType] - The type of the input field (default is "text").
  * @param {boolean} props.isEditing - Flag to determine if the component is in editing mode.
  * @param {(e: React.ChangeEvent<HTMLInputElement>) => void} props.onChange - Function to handle input changes.
  *
@@ -40,16 +39,20 @@ export default function EditableText({
   isEditing,
   onChange,
 }: Props) {
+  const today = new Date();
+  const formattedDate = today.toISOString().split("T")[0];
+
   return (
     <div className="flex items-center">
       {isEditing ? (
         <input
-          type="text"
+          type="date"
           name={name}
           value={value}
           onChange={onChange}
           autoFocus
           required
+          min={formattedDate}
           autoComplete="off"
           autoCorrect="off"
           className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"

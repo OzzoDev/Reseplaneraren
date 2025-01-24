@@ -4,6 +4,7 @@ import { IoCheckmarkOutline, IoTrashOutline } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
 import EditableText from "./EditableText";
 import useOutsideClick from "../hooks/useOutsideClick";
+import EditableDate from "./EditableDate";
 
 interface Props {
   activity: Activity;
@@ -39,6 +40,8 @@ export default function ActivityItem({
   const [localActivity, setLocalActivity] = useState<Activity>(activity);
   const editFormRef = useRef<HTMLFormElement | null>(null);
 
+  const today = new Date();
+
   useOutsideClick(editFormRef, () => {
     setIsEditing(false);
     setLocalActivity(activity);
@@ -50,8 +53,19 @@ export default function ActivityItem({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const editedActivity = { ...localActivity, [name]: value };
-    setLocalActivity(editedActivity);
+    if (name === "date") {
+      const inputDate = new Date(value);
+      const isValidDate =
+        inputDate.toString() !== "Invalid Date" && inputDate >= today;
+
+      if (isValidDate) {
+        const editedActivity = { ...localActivity, [name]: value };
+        setLocalActivity(editedActivity);
+      }
+    } else {
+      const editedActivity = { ...localActivity, [name]: value };
+      setLocalActivity(editedActivity);
+    }
   };
 
   const handleEdit = (e: React.FocusEvent<HTMLFormElement>) => {
@@ -65,11 +79,13 @@ export default function ActivityItem({
       <form
         onSubmit={handleEdit}
         ref={editFormRef}
-        className="flex flex-col items-center space-y-2 w-full">
+        className="flex flex-col items-center space-y-2 w-full"
+      >
         <EditableText
           tag="h3"
           name="activity"
           value={localActivity.activity}
+          text={activity.activity}
           isEditing={isEditing}
           onChange={handleChange}
         />
@@ -77,25 +93,29 @@ export default function ActivityItem({
           tag="p"
           name="place"
           value={localActivity.place}
+          text={activity.place}
           isEditing={isEditing}
           onChange={handleChange}
         />
-        <EditableText
+        <EditableDate
           tag="p"
           name="date"
           value={localActivity.date}
+          text={activity.date}
           isEditing={isEditing}
-          inputType="date"
           onChange={handleChange}
         />
         <button
           type="submit"
-          className="bg-blue-500 text-white font-bold py-2 px-10 rounded hover:bg-blue-600 transition duration-200">
+          className="bg-blue-500 text-white font-bold py-2 px-10 rounded hover:bg-blue-600 transition duration-200"
+        >
           {isEditing ? <IoCheckmarkOutline /> : <FaRegEdit />}
         </button>
         <button
+          type="button"
           onClick={handleDelete}
-          className="bg-red-500 text-white font-bold py-2 px-10 rounded hover:bg-red-600 transition duration-200">
+          className="bg-red-500 text-white font-bold py-2 px-10 rounded hover:bg-red-600 transition duration-200"
+        >
           <IoTrashOutline />
         </button>
       </form>
