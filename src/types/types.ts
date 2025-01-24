@@ -4,4 +4,10 @@ export type Activity = {
   place: string;
   date: string;
   isVisible: boolean;
+  priority: Priority;
+};
+
+export type Priority = {
+  prio: number;
+  color: string;
 };

@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { Activity } from "../types/types";
+import { currentDate } from "../utils/utils";
 
 interface Props {
-  inputValue: string;
   labelText: string;
   localActivities: Activity;
   setLocalActivites: (activities: Activity) => void;
@@ -12,7 +13,6 @@ interface Props {
  * A component for inputting a date associated with an activity.
  *
  * @param {Props} props - The properties for the component.
- * @param {string} props.inputValue - The current date value for the input.
  * @param {string} props.labelText - The label text for the date input.
  * @param {Activity} props.localActivities - The current local activities object.
  * @param {(activities: Activity) => void} props.setLocalActivites - Function to update local activities.
@@ -22,7 +22,6 @@ interface Props {
  *
  * @example
  * <ActivityDateInput
- *   value={activityDate}
  *   labelText="Select Date"
  *   localActivities={localActivities}
  *   setLocalActivites={setLocalActivities}
@@ -31,21 +30,22 @@ interface Props {
  */
 
 export default function ActivityDateInput({
-  inputValue,
   labelText,
   localActivities,
   setLocalActivites,
   setError,
 }: Props) {
+  const [dateValue, setDateValue] = useState<string>(currentDate());
   const today = new Date();
-  today.setDate(today.getDate() - 1);
-  const formattedDate = today.toISOString().split("T")[0];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    setDateValue(value);
     setError("");
     const inputDate = new Date(value);
     const isValidDate = inputDate.toString() !== "Invalid Date" && inputDate >= today;
+
+    console.log(isValidDate);
 
     if (isValidDate) {
       const newActivities = { ...localActivities, [name]: value };
@@ -62,9 +62,9 @@ export default function ActivityDateInput({
         type="date"
         name="date"
         id="date"
-        value={inputValue}
+        value={dateValue}
         onChange={handleChange}
-        min={formattedDate}
+        min={currentDate()}
         className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         required
       />

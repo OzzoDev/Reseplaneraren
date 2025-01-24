@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { Activity } from "./types/types";
@@ -13,19 +13,25 @@ function App() {
   const [activities, setActivities] = useLocalStorage<Activity[]>(ACTIVITES_KEY, []);
   const location = useLocation();
 
+  const routes = [
+    {
+      path: "/",
+      element: <StartPage activities={activities} setActivities={setActivities} />,
+    },
+    {
+      path: "/activities",
+      element: <ActivityPage activities={activities} setActivities={setActivities} />,
+    },
+  ];
+
   return (
     <TransitionGroup>
       <CSSTransition key={location.key} classNames="fade" timeout={500}>
         <Suspense fallback={<SkeletonLoader />}>
           <Routes location={location}>
-            <Route
-              path="/"
-              element={<StartPage activities={activities} setActivities={setActivities} />}
-            />
-            <Route
-              path="/activities"
-              element={<ActivityPage activities={activities} setActivities={setActivities} />}
-            />
+            {routes.map((route, index) => (
+              <Route key={index} path={route.path} element={route.element} />
+            ))}
           </Routes>
         </Suspense>
       </CSSTransition>
@@ -33,10 +39,4 @@ function App() {
   );
 }
 
-const Main = () => (
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
-);
-
-export default Main;
+export default App;

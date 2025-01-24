@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
-import { Activity } from "../types/types";
+import { Activity, Priority } from "../types/types";
 import { IoCheckmarkOutline, IoTrashOutline } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
 import EditableText from "./EditableText";
 import useOutsideClick from "../hooks/useOutsideClick";
 import EditableDate from "./EditableDate";
+import EditablePriority from "./EditablePriority";
 
 interface Props {
   activity: Activity;
@@ -53,8 +54,6 @@ export default function ActivityItem({ activity, deleteActivity, editActivity }:
       const inputDate = new Date(value);
       const isValidDate = inputDate.toString() !== "Invalid Date" && inputDate >= today;
 
-      console.log("Is valid date?: ", isValidDate, inputDate);
-
       if (isValidDate) {
         const editedActivity = { ...localActivity, [name]: value };
         setLocalActivity(editedActivity);
@@ -67,12 +66,24 @@ export default function ActivityItem({ activity, deleteActivity, editActivity }:
 
   const handleEdit = (e: React.FocusEvent<HTMLFormElement>) => {
     e.preventDefault();
-    editActivity(localActivity);
+    if (isEditing) {
+      editActivity(localActivity);
+    }
+
     setIsEditing((prevState) => !prevState);
   };
 
+  const handleSetPriority = (priority: Priority) => {
+    console.log("Set to : ", priority);
+
+    setLocalActivity((prevActivity) => ({
+      ...prevActivity,
+      priority,
+    }));
+  };
+
   return (
-    <li className="flex justify-between items-center p-4 bg-white rounded-lg shadow-md mb-2">
+    <li className="relative flex justify-between items-center p-4 bg-white rounded-lg shadow-md mb-2">
       <form
         onSubmit={handleEdit}
         ref={editFormRef}
@@ -96,10 +107,15 @@ export default function ActivityItem({ activity, deleteActivity, editActivity }:
         <EditableDate
           tag="p"
           name="date"
-          value={localActivity.date}
           text={activity.date}
           isEditing={isEditing}
           onChange={handleChange}
+        />
+        <EditablePriority
+          isEditing={isEditing}
+          priority={localActivity.priority}
+          renderedPriority={activity.priority}
+          setPriority={handleSetPriority}
         />
         <button
           type="submit"

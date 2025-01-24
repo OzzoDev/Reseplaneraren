@@ -22,7 +22,7 @@ interface Props {
  */
 export default function Search({ onChange }: Props) {
   return (
-    <div className="absolute top-0 left-0 right-0 w-full mb-10">
+    <div className="w-full">
       <div className="relative">
         <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
           <CiSearch />

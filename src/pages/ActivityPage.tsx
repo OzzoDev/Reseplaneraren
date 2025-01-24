@@ -3,7 +3,8 @@ import ActivityList from "../components/ActivityList";
 import PageLink from "../components/PageLink";
 import Search from "../components/Search";
 import { Activity } from "../types/types";
-import { searchSuccess } from "../utils/utils";
+import { searchSuccess, sortActivities } from "../utils/utils";
+import Sort from "../components/Sort";
 
 interface Props {
   activities: Activity[];
@@ -46,15 +47,31 @@ export default function ActivityPage({ activities, setActivities }: Props) {
     setActivities(updatedActivities);
   };
 
+  const handleSortItems = (value: number) => {
+    sortActivities(value, activities, setActivities);
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-t from-slate-200 to-sky-900">
+    <div className="flex flex-col min-h-screen bg-gradient-to-t from-slate-200 to-sky-900">
       <Search onChange={handleSearchActivites} />
+      <div className="flex space-x-5 mt-4 pl-2">
+        <PageLink path="/" text="Add activitiy" />
+        <Sort
+          sortItems={[
+            "Upcoming",
+            "Activity a-z",
+            "Place a-z",
+            "Priority high-low",
+            "Priority low-high",
+          ]}
+          onChange={handleSortItems}
+        />
+      </div>
       <ActivityList
         activities={activities}
         isSearchSuccessful={isSearchSuccessful}
         setActivities={setActivities}
       />
-      <PageLink path="/" text="Add activitiy" />
     </div>
   );
 }

@@ -1,10 +1,12 @@
-import { useState } from "react";
-import { Activity } from "../types/types";
+import { useEffect, useState } from "react";
+import { Activity, Priority } from "../types/types";
 import ActivityDateInput from "./ActivityDateInput";
 import ActivityInput from "./ActivityInput";
-import { generateID, isNewActivity } from "../utils/utils";
+import { generateID, isNewActivity, sortActivities } from "../utils/utils";
 import FormButton from "./FormButton";
 import ErrorMessage from "./ErrorMessage";
+import { defaultActivity, priorityMap } from "../constants/constants";
+import PrioritySelector from "./PrioritySelector";
 
 interface Props {
   activities: Activity[];
@@ -29,13 +31,13 @@ interface Props {
 
 export default function ActivityForm({ activities, setActivities }: Props) {
   const [error, setError] = useState<string>("");
-  const [localActivity, setLocalActivity] = useState<Activity>({
-    activity: "",
-    place: "",
-    date: "",
-    id: -1,
-    isVisible: true,
-  });
+  const [localActivity, setLocalActivity] = useState<Activity>(defaultActivity);
+
+  useEffect(() => {
+    if (localActivity === defaultActivity) {
+      sortActivities(0, activities, setActivities);
+    }
+  }, [localActivity]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,19 +46,25 @@ export default function ActivityForm({ activities, setActivities }: Props) {
       const updatedActivities: Activity[] = [
         ...activities,
         { ...localActivity, id: generateID(activities) },
-      ].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-
+      ];
       setActivities(updatedActivities);
-      setLocalActivity({ activity: "", place: "", date: "", id: -1, isVisible: true });
+      setLocalActivity(defaultActivity);
     } else {
       setError("Activity already exists");
     }
   };
 
+  const handleSetPriority = (priority: Priority) => {
+    setLocalActivity((prevActivity) => ({
+      ...prevActivity,
+      priority,
+    }));
+  };
+
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col p-8 bg-white rounded-lg shadow-md mx-auto max-w-lg w-full space-y-4">
+      className="flex flex-col p-8 bg-white rounded-lg shadow-md m-auto max-w-lg w-full space-y-4">
       <h2 className="text-2xl font-semibold text-center">Add New Activity</h2>
       <ActivityInput
         labelText="Activity"
@@ -76,10 +84,14 @@ export default function ActivityForm({ activities, setActivities }: Props) {
       />
       <ActivityDateInput
         labelText="When"
-        inputValue={localActivity.date}
         localActivities={localActivity}
         setLocalActivites={setLocalActivity}
         setError={setError}
+      />
+      <PrioritySelector
+        priorities={priorityMap}
+        currentPriority={localActivity.priority}
+        setPriority={handleSetPriority}
       />
       <ErrorMessage error={error} />
       <FormButton btnText="Add" />

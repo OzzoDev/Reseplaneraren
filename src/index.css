@@ -20,3 +20,8 @@
   opacity: 0;
   transition: opacity 500ms;
 }
+
+.outline-offset {
+  outline: 1px solid black;
+  outline-offset: 3px;
+}

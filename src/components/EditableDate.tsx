@@ -1,7 +1,9 @@
+import { useState } from "react";
+import { currentDate } from "../utils/utils";
+
 interface Props {
   tag: React.ElementType;
   name: string;
-  value: string;
   text: string;
   isEditing: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -14,7 +16,6 @@ interface Props {
  * @param {Props} props - The properties for the component.
  * @param {React.ElementType} props.tag - The HTML element type to render when not editing.
  * @param {string} props.name - The name attribute for the input field.
- * @param {string} props.value - The current value of the editable text.
  * @param {string} props.text - The current text of the editable text.
  * @param {boolean} props.isEditing - Flag to determine if the component is in editing mode.
  * @param {(e: React.ChangeEvent<HTMLInputElement>) => void} props.onChange - Function to handle input changes.
@@ -26,16 +27,19 @@ interface Props {
  *   tag="h3"
  *   name="activity"
  *   text = "activity"
- *   value={activityValue}
  *   isEditing={isEditing}
  *   onChange={handleChange}
  * />
  */
 
-export default function EditableText({ tag: Tag, name, value, text, isEditing, onChange }: Props) {
-  const today = new Date();
-  today.setDate(today.getDate() - 1);
-  const formattedDate = today.toISOString().split("T")[0];
+export default function EditableText({ tag: Tag, name, text, isEditing, onChange }: Props) {
+  const [dateValue, setDateValue] = useState<string>(currentDate());
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setDateValue(value);
+    onChange(e);
+  };
 
   return (
     <div className="flex items-center">
@@ -43,14 +47,14 @@ export default function EditableText({ tag: Tag, name, value, text, isEditing, o
         <input
           type="date"
           name={name}
-          value={value}
-          onChange={onChange}
+          value={dateValue}
+          onChange={handleChange}
           autoFocus
           required
-          min={formattedDate}
+          min={currentDate()}
           autoComplete="off"
           autoCorrect="off"
-          className="border border-gray-300 rounded-lg py-2 px-8 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-gray-300 rounded-lg py-2 px-[30px] w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       ) : (
         <Tag className="text-gray-800 font-semibold">{text}</Tag>
