@@ -52,7 +52,7 @@ export default function ActivityList({ activities, setActivities }: Props) {
   return (
     <>
       {noActivities ? (
-        <h2 className="text-5xl">No activites!</h2>
+        <h2 className="text-5xl text-white">No activites!</h2>
       ) : (
         <ul className="flex flex-col p-8 bg-white rounded-lg shadow-md mx-auto max-w-lg w-full space-y-4">
           {activities.map((activity) => {

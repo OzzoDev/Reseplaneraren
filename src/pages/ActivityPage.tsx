@@ -25,7 +25,7 @@ interface Props {
 
 export default function ActivityPage({ activities, setActivities }: Props) {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-400">
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-b from-slate-300 bg-gradient-to-b from-slate-200 to-sky-900">
       <ActivityList activities={activities} setActivities={setActivities} />
       <PageLink path="/" text="Add activitiy" />
     </div>
