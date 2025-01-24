@@ -47,7 +47,7 @@ export default function ActivityPage({ activities, setActivities }: Props) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-b from-slate-300 bg-gradient-to-t from-slate-200 to-sky-900">
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-t from-slate-200 to-sky-900">
       <Search onChange={handleSearchActivites} />
       <ActivityList
         activities={activities}

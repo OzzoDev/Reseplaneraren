@@ -1,6 +1,7 @@
 import ActivityForm from "../components/ActivityForm";
 import { Activity } from "../types/types";
 import PageLink from "../components/PageLink";
+import ActivityCount from "../components/ActivityCount";
 
 interface Props {
   activities: Activity[];
@@ -26,6 +27,7 @@ interface Props {
 export default function StartPage({ activities, setActivities }: Props) {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-t from-slate-200 to-sky-900">
+      <ActivityCount activites={activities} />
       <ActivityForm activities={activities} setActivities={setActivities} />
       <PageLink path="/activities" text="See my activites" />
     </div>
