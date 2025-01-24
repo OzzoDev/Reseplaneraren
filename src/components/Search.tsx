@@ -14,7 +14,7 @@ export default function Search({ onChange }: Props) {
         <input
           type="text"
           onChange={(event) => onChange(event.target.value.toLowerCase())}
-          className="block w-full p-4 ps-10 text-sm text-gray-900 bg-slate-300 focus:outline-none dark:placeholder-gray-400"
+          className="block w-full p-4 ps-10 text-sm bg-white text-gray-900 focus:outline-none dark:placeholder-gray-400"
           placeholder="Search activities"
           required
         />

@@ -31,11 +31,7 @@ interface Props {
  * />
  */
 
-export default function ActivityItem({
-  activity,
-  deleteActivity,
-  editActivity,
-}: Props) {
+export default function ActivityItem({ activity, deleteActivity, editActivity }: Props) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [localActivity, setLocalActivity] = useState<Activity>(activity);
   const editFormRef = useRef<HTMLFormElement | null>(null);
@@ -55,8 +51,9 @@ export default function ActivityItem({
     const { name, value } = e.target;
     if (name === "date") {
       const inputDate = new Date(value);
-      const isValidDate =
-        inputDate.toString() !== "Invalid Date" && inputDate >= today;
+      const isValidDate = inputDate.toString() !== "Invalid Date" && inputDate >= today;
+
+      console.log("Is valid date?: ", isValidDate, inputDate);
 
       if (isValidDate) {
         const editedActivity = { ...localActivity, [name]: value };
@@ -79,8 +76,7 @@ export default function ActivityItem({
       <form
         onSubmit={handleEdit}
         ref={editFormRef}
-        className="flex flex-col items-center space-y-2 w-full"
-      >
+        className="flex flex-col items-center space-y-2 w-full">
         <EditableText
           tag="h3"
           name="activity"
@@ -107,15 +103,13 @@ export default function ActivityItem({
         />
         <button
           type="submit"
-          className="bg-blue-500 text-white font-bold py-2 px-10 rounded hover:bg-blue-600 transition duration-200"
-        >
+          className="bg-blue-500 text-white font-bold py-2 px-10 rounded hover:bg-blue-600 transition duration-200">
           {isEditing ? <IoCheckmarkOutline /> : <FaRegEdit />}
         </button>
         <button
           type="button"
           onClick={handleDelete}
-          className="bg-red-500 text-white font-bold py-2 px-10 rounded hover:bg-red-600 transition duration-200"
-        >
+          className="bg-red-500 text-white font-bold py-2 px-10 rounded hover:bg-red-600 transition duration-200">
           <IoTrashOutline />
         </button>
       </form>

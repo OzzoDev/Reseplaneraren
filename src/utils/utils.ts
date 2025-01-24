@@ -7,3 +7,7 @@ export function generateID(activities: Activity[]): number {
     return Math.max(...activities.map((activity) => activity.id)) + 1;
   }
 }
+
+export function searchSuccess(activities: Activity[]): boolean {
+  return activities.some((activitiy) => activitiy.isVisible);
+}

@@ -3,7 +3,7 @@ import ActivityItem from "./ActivityItem";
 
 interface Props {
   activities: Activity[];
-  filteredActivities: Activity[];
+  isSearchSuccessful: boolean;
   setActivities: (activities: Activity[]) => void;
 }
 
@@ -26,11 +26,7 @@ interface Props {
  * />
  */
 
-export default function ActivityList({
-  activities,
-  filteredActivities,
-  setActivities,
-}: Props) {
+export default function ActivityList({ activities, isSearchSuccessful, setActivities }: Props) {
   const handleDeleteActivity = (activity: Activity) => {
     const updatedActivities = activities
       .filter((act) => {
@@ -60,11 +56,11 @@ export default function ActivityList({
     return <h2 className="text-5xl text-white">No activites!</h2>;
   }
 
-  const noMatchActivities = filteredActivities.length === 0;
-
-  if (noMatchActivities) {
+  if (!isSearchSuccessful) {
     return <h2 className="text-5xl text-white">No matching activites!</h2>;
   }
+
+  const filteredActivities = activities.filter((activitiy) => activitiy.isVisible);
 
   return (
     <ul className="flex flex-col p-8 mx-auto max-w-lg w-full space-y-4">

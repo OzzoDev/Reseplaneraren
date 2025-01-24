@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ActivityList from "../components/ActivityList";
 import PageLink from "../components/PageLink";
 import Search from "../components/Search";
 import { Activity } from "../types/types";
+import { searchSuccess } from "../utils/utils";
 
 interface Props {
   activities: Activity[];
@@ -25,15 +26,24 @@ interface Props {
  */
 
 export default function ActivityPage({ activities, setActivities }: Props) {
-  const [filteredActivites, setFilteredActivites] =
-    useState<Activity[]>(activities);
+  const [isSearchSuccessful, setIsSearchSuccessful] = useState<boolean>(searchSuccess(activities));
+
+  useEffect(() => {
+    setIsSearchSuccessful(searchSuccess(activities));
+  }, [activities]);
 
   const handleSearchActivites = (searchQurey: string) => {
-    const updatedActivities: Activity[] = activities.filter((activity) => {
-      return activity.activity.toLowerCase().includes(searchQurey);
+    const updatedActivities: Activity[] = activities.map((activity) => {
+      const normalizedActivity = activity.activity.toLowerCase();
+      if (normalizedActivity.includes(searchQurey)) {
+        activity.isVisible = true;
+      } else {
+        activity.isVisible = false;
+      }
+      return activity;
     });
 
-    setFilteredActivites(updatedActivities);
+    setActivities(updatedActivities);
   };
 
   return (
@@ -41,7 +51,7 @@ export default function ActivityPage({ activities, setActivities }: Props) {
       <Search onChange={handleSearchActivites} />
       <ActivityList
         activities={activities}
-        filteredActivities={filteredActivites}
+        isSearchSuccessful={isSearchSuccessful}
         setActivities={setActivities}
       />
       <PageLink path="/" text="Add activitiy" />
