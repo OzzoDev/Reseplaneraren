@@ -3,21 +3,31 @@ import StartPage from "./pages/StartPage";
 import ActivityPage from "./pages/ActivityPage";
 import { Activity } from "./types/types";
 import useLocalStorage from "./hooks/useLocalStorage";
-import { ACTIVITES_KEY } from "./constants/contants";
+import { ACTIVITES_KEY } from "./constants/constants";
 
 function App() {
-  const [activities, setActivities] = useLocalStorage<Activity[]>(ACTIVITES_KEY, []);
+  const [activities, setActivities] = useLocalStorage<Activity[]>(
+    ACTIVITES_KEY,
+    []
+  );
 
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path="/"
-          element={<StartPage activities={activities} setActivities={setActivities} />}
+          element={
+            <StartPage activities={activities} setActivities={setActivities} />
+          }
         />
         <Route
           path="/activities"
-          element={<ActivityPage activities={activities} setActivities={setActivities} />}
+          element={
+            <ActivityPage
+              activities={activities}
+              setActivities={setActivities}
+            />
+          }
         />
         <Route />
       </Routes>
