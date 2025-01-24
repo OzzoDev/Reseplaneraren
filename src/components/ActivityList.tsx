@@ -13,7 +13,7 @@ interface Props {
  *
  * @param {Props} props - The properties for the component.
  * @param {Activity[]} props.activities - The array of original activities.
- * @param {Activity[]} props.filteredActivities - The array of activities to display.
+ * @param {Activity[]} props.isSearchSuccessful - A check to see if there is any matching activities to search qurey.
  * @param {(activities: Activity[]) => void} props.setActivities - Function to update the activities.
  *
  * @returns {JSX.Element} The rendered list of activities.
@@ -21,7 +21,7 @@ interface Props {
  * @example
  * <ActivityList
  *   activities={activities}
- *   filteredActivities={filteredActivities}
+ *   isSearchSuccessful={isSearchSuccessful}
  *   setActivities={setActivities}
  * />
  */
