@@ -11,3 +11,7 @@ export function generateID(activities: Activity[]): number {
 export function searchSuccess(activities: Activity[]): boolean {
   return activities.some((activitiy) => activitiy.isVisible);
 }
+
+export function isNewActivity(activitiy: Activity, activities: Activity[]): boolean {
+  return !activities.some((act) => act.activity.toLowerCase() === activitiy.activity.toLowerCase());
+}

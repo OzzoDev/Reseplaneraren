@@ -32,15 +32,9 @@ interface Props {
  * />
  */
 
-export default function EditableText({
-  tag: Tag,
-  name,
-  value,
-  text,
-  isEditing,
-  onChange,
-}: Props) {
+export default function EditableText({ tag: Tag, name, value, text, isEditing, onChange }: Props) {
   const today = new Date();
+  today.setDate(today.getDate() - 1);
   const formattedDate = today.toISOString().split("T")[0];
 
   return (

@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Activity } from "../types/types";
 import ActivityDateInput from "./ActivityDateInput";
 import ActivityInput from "./ActivityInput";
-import { generateID } from "../utils/utils";
+import { generateID, isNewActivity } from "../utils/utils";
+import FormButton from "./FormButton";
+import ErrorMessage from "./ErrorMessage";
 
 interface Props {
   activities: Activity[];
@@ -26,7 +28,8 @@ interface Props {
  */
 
 export default function ActivityForm({ activities, setActivities }: Props) {
-  const [localActivities, setLocalActivites] = useState<Activity>({
+  const [error, setError] = useState<string>("");
+  const [localActivity, setLocalActivity] = useState<Activity>({
     activity: "",
     place: "",
     date: "",
@@ -36,13 +39,18 @@ export default function ActivityForm({ activities, setActivities }: Props) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const updatedActivities: Activity[] = [
-      ...activities,
-      { ...localActivities, id: generateID(activities) },
-    ].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-    setActivities(updatedActivities);
-    setLocalActivites({ activity: "", place: "", date: "", id: -1, isVisible: true });
+    if (isNewActivity(localActivity, activities)) {
+      const updatedActivities: Activity[] = [
+        ...activities,
+        { ...localActivity, id: generateID(activities) },
+      ].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+      setActivities(updatedActivities);
+      setLocalActivity({ activity: "", place: "", date: "", id: -1, isVisible: true });
+    } else {
+      setError("Activity already exists");
+    }
   };
 
   return (
@@ -53,28 +61,28 @@ export default function ActivityForm({ activities, setActivities }: Props) {
       <ActivityInput
         labelText="Activity"
         name="activity"
-        value={localActivities.activity}
-        localActivities={localActivities}
-        setLocalActivites={setLocalActivites}
+        value={localActivity.activity}
+        localActivities={localActivity}
+        setLocalActivites={setLocalActivity}
+        setError={setError}
       />
       <ActivityInput
         labelText="Where"
         name="place"
-        value={localActivities.place}
-        localActivities={localActivities}
-        setLocalActivites={setLocalActivites}
+        value={localActivity.place}
+        localActivities={localActivity}
+        setLocalActivites={setLocalActivity}
+        setError={setError}
       />
       <ActivityDateInput
         labelText="When"
-        inputValue={localActivities.date}
-        localActivities={localActivities}
-        setLocalActivites={setLocalActivites}
+        inputValue={localActivity.date}
+        localActivities={localActivity}
+        setLocalActivites={setLocalActivity}
+        setError={setError}
       />
-      <button
-        type="submit"
-        className="w-full bg-blue-500 text-white font-bold py-3 rounded hover:bg-blue-600 transition duration-200">
-        Add
-      </button>
+      <ErrorMessage error={error} />
+      <FormButton btnText="Add" />
     </form>
   );
 }

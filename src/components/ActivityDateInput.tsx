@@ -5,6 +5,7 @@ interface Props {
   labelText: string;
   localActivities: Activity;
   setLocalActivites: (activities: Activity) => void;
+  setError: (error: string) => void;
 }
 
 /**
@@ -15,6 +16,7 @@ interface Props {
  * @param {string} props.labelText - The label text for the date input.
  * @param {Activity} props.localActivities - The current local activities object.
  * @param {(activities: Activity) => void} props.setLocalActivites - Function to update local activities.
+ * @param {(error: string) => void} props.error - Function to update from error.
  *
  * @returns {JSX.Element} The rendered date input element.
  *
@@ -24,6 +26,7 @@ interface Props {
  *   labelText="Select Date"
  *   localActivities={localActivities}
  *   setLocalActivites={setLocalActivities}
+ *   setError={setError}
  * />
  */
 
@@ -32,15 +35,17 @@ export default function ActivityDateInput({
   labelText,
   localActivities,
   setLocalActivites,
+  setError,
 }: Props) {
   const today = new Date();
+  today.setDate(today.getDate() - 1);
   const formattedDate = today.toISOString().split("T")[0];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    setError("");
     const inputDate = new Date(value);
-    const isValidDate =
-      inputDate.toString() !== "Invalid Date" && inputDate >= today;
+    const isValidDate = inputDate.toString() !== "Invalid Date" && inputDate >= today;
 
     if (isValidDate) {
       const newActivities = { ...localActivities, [name]: value };

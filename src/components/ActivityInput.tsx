@@ -6,6 +6,7 @@ interface Props {
   labelText: string;
   localActivities: Activity;
   setLocalActivites: (activities: Activity) => void;
+  setError: (error: string) => void;
 }
 
 /**
@@ -17,6 +18,7 @@ interface Props {
  * @param {string} props.labelText - The label text for the input field.
  * @param {Activity} props.localActivities - The current local activities object.
  * @param {(activities: Activity) => void} props.setLocalActivites - Function to update local activities.
+ * @param {(error: string) => void} props.error - Function to update from error.
  *
  * @returns {JSX.Element} The rendered input element for activities.
  *
@@ -27,6 +29,7 @@ interface Props {
  *   labelText="Activity"
  *   localActivities={localActivities}
  *   setLocalActivites={setLocalActivites}
+ *   setError={setError}
  * />
  */
 
@@ -36,9 +39,11 @@ export default function ActivityInput({
   labelText,
   localActivities,
   setLocalActivites,
+  setError,
 }: Props) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    setError("");
     const newActivites = { ...localActivities, [name]: value };
     setLocalActivites(newActivites);
   };
