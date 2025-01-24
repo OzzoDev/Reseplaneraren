@@ -9,7 +9,7 @@ interface Props {
 export default function PrioritySelector({ priorities, currentPriority, setPriority }: Props) {
   return (
     <div className="flex flex-col items-start space-y-1">
-      <p className="text-gray-700 font-medium">Select priority</p>
+      <p className="text-inherit font-medium">Select priority</p>
       <div className="flex justify-center space-x-4 m-auto w-full">
         <span>Low</span>
         <ul className="flex justify-center items-center space-x-4">
@@ -21,7 +21,9 @@ export default function PrioritySelector({ priorities, currentPriority, setPrior
                 onClick={() => setPriority(priority)}
                 className={`w-[16px] h-[16px] bg-${priority.color}-500 hover:bg-${
                   priority.color
-                }-300 transition duration-300 rounded-full ${markSelected ? "outline-offset" : ""}`}
+                }-300 transition duration-300 rounded-full cursor-pointer ${
+                  markSelected ? "outline-offset" : ""
+                }`}
               />
             );
           })}

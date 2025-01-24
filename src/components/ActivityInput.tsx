@@ -50,7 +50,7 @@ export default function ActivityInput({
 
   return (
     <div className="flex flex-col mb-4">
-      <label className="mb-1 text-gray-700 font-medium" htmlFor={name}>
+      <label className="mb-1 text-inherit font-medium" htmlFor={name}>
         {labelText}
       </label>
       <input

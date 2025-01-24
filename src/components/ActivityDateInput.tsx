@@ -53,7 +53,7 @@ export default function ActivityDateInput({
 
   return (
     <div className="flex flex-col mb-4">
-      <label className="mb-1 text-gray-700 font-medium" htmlFor="date">
+      <label className="mb-1 text-inherit font-medium" htmlFor="date">
         {labelText}
       </label>
       <input

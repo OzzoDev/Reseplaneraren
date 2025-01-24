@@ -70,7 +70,7 @@ export default function ActivityList({
   const filteredActivities = activities.filter((activity) => activity.isVisible);
 
   return (
-    <ul className="p-8 m-auto max-w-lg w-full space-y-4">
+    <ul className="m-auto mt-[200px] w-full text-white bg-gray-700 bg-opacity-100">
       {filteredActivities.map((activity) => {
         return (
           <ActivityItem

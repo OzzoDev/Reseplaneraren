@@ -35,11 +35,11 @@ interface Props {
 export default function ActivityItem({ activity, deleteActivity, editActivity }: Props) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [localActivity, setLocalActivity] = useState<Activity>(activity);
-  const editFormRef = useRef<HTMLFormElement | null>(null);
+  const itemRef = useRef<HTMLLIElement | null>(null);
 
   const today = new Date();
 
-  useOutsideClick(editFormRef, () => {
+  useOutsideClick(itemRef, () => {
     setIsEditing(false);
     setLocalActivity(activity);
   });
@@ -81,51 +81,57 @@ export default function ActivityItem({ activity, deleteActivity, editActivity }:
   };
 
   return (
-    <li className="relative flex justify-between items-center p-4 bg-white rounded-lg shadow-md mb-2">
-      <form
-        onSubmit={handleEdit}
-        ref={editFormRef}
-        className="flex flex-col items-center space-y-2 w-full">
-        <EditableText
-          tag="h3"
-          name="activity"
-          value={localActivity.activity}
-          text={activity.activity}
-          isEditing={isEditing}
-          onChange={handleChange}
-        />
-        <EditableText
-          tag="p"
-          name="place"
-          value={localActivity.place}
-          text={activity.place}
-          isEditing={isEditing}
-          onChange={handleChange}
-        />
-        <EditableDate
-          tag="p"
-          name="date"
-          text={activity.date}
-          isEditing={isEditing}
-          onChange={handleChange}
-        />
+    <li
+      ref={itemRef}
+      className="relative flex justify-between items-center p-4 py-10 border-b-[1px]">
+      <form onSubmit={handleEdit} className="flex items-center justify-between space-y-2 w-full">
         <EditablePriority
           isEditing={isEditing}
           priority={localActivity.priority}
           renderedPriority={activity.priority}
           setPriority={handleSetPriority}
         />
-        <button
-          type="submit"
-          className="bg-blue-500 text-white font-bold py-2 px-10 rounded hover:bg-blue-600 transition duration-200">
-          {isEditing ? <IoCheckmarkOutline /> : <FaRegEdit />}
-        </button>
-        <button
-          type="button"
-          onClick={handleDelete}
-          className="bg-red-500 text-white font-bold py-2 px-10 rounded hover:bg-red-600 transition duration-200">
-          <IoTrashOutline />
-        </button>
+        <div className="grid grid-cols-[repeat(3,1fr)] items-center gap-x-[150px]">
+          <EditableText
+            tag="h3"
+            name="activity"
+            value={localActivity.activity}
+            text={activity.activity}
+            labelText="Activity:"
+            isEditing={isEditing}
+            onChange={handleChange}
+          />
+          <EditableText
+            tag="p"
+            name="place"
+            value={localActivity.place}
+            text={activity.place}
+            labelText="Where:"
+            isEditing={isEditing}
+            onChange={handleChange}
+          />
+          <EditableDate
+            tag="p"
+            name="date"
+            text={activity.date}
+            labelText="When: "
+            isEditing={isEditing}
+            onChange={handleChange}
+          />
+        </div>
+        <div className=" flex space-x-2">
+          <button
+            type="submit"
+            className="bg-blue-500 text-white font-bold py-2 px-10 rounded hover:bg-blue-600 transition duration-200">
+            {isEditing ? <IoCheckmarkOutline /> : <FaRegEdit />}
+          </button>
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="bg-red-500 text-white font-bold py-2 px-10 rounded hover:bg-red-600 transition duration-200">
+            <IoTrashOutline />
+          </button>
+        </div>
       </form>
     </li>
   );

@@ -18,7 +18,7 @@ export default function EditablePriority({
   if (!isEditing) {
     return (
       <div
-        className={`w-[16px] h-[16px] absolute top-1 right-2 bg-${renderedPriority.color}-500 hover:bg-${renderedPriority.color}-300 transition duration-300 rounded-full`}
+        className={`w-[16px] h-[16px] bg-${renderedPriority.color}-500 hover:bg-${renderedPriority.color}-300 transition duration-300 rounded-full`}
       />
     );
   }

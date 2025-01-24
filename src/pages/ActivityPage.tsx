@@ -61,7 +61,7 @@ export default function ActivityPage({
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-t from-slate-200 to-sky-900">
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-slate-200 to-sky-900">
       <Search onChange={handleSearchActivites} />
       <div className="flex space-x-5 mt-4 pl-2">
         <PageLink path="/" text="Add activitiy" />

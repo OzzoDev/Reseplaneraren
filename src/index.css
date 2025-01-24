@@ -6,6 +6,10 @@
   width: 0;
 }
 
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
 .fade-enter {
   opacity: 0;
 }
@@ -24,4 +28,8 @@
 .outline-offset {
   outline: 1px solid black;
   outline-offset: 3px;
+}
+
+input {
+  caret-color: #fff;
 }

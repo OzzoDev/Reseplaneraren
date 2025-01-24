@@ -5,6 +5,7 @@ interface Props {
   tag: React.ElementType;
   name: string;
   text: string;
+  labelText: string;
   isEditing: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -32,7 +33,14 @@ interface Props {
  * />
  */
 
-export default function EditableText({ tag: Tag, name, text, isEditing, onChange }: Props) {
+export default function EditableText({
+  tag: Tag,
+  name,
+  text,
+  labelText,
+  isEditing,
+  onChange,
+}: Props) {
   const [dateValue, setDateValue] = useState<string>(currentDate());
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,10 +62,13 @@ export default function EditableText({ tag: Tag, name, text, isEditing, onChange
           min={currentDate()}
           autoComplete="off"
           autoCorrect="off"
-          className="border border-gray-300 rounded-lg py-2 px-[30px] w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-gray-300 rounded-lg bg-transparent w-full text-white px-4 py-1 focus:outline-none focus:ring-2 focus:ring-grey-500"
         />
       ) : (
-        <Tag className="text-gray-800 font-semibold">{text}</Tag>
+        <div className="flex space-x-3">
+          <p className="text-blue-200">{labelText}</p>
+          <Tag>{text}</Tag>
+        </div>
       )}
     </div>
   );

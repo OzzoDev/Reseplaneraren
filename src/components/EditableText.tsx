@@ -3,6 +3,7 @@ interface Props {
   name: string;
   value: string;
   text: string;
+  labelText: string;
   isEditing: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -38,6 +39,7 @@ export default function EditableText({
   name,
   value,
   text,
+  labelText,
   isEditing,
   onChange,
 }: Props) {
@@ -53,10 +55,13 @@ export default function EditableText({
           required
           autoComplete="off"
           autoCorrect="off"
-          className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-gray-300 rounded-lg bg-transparent w-full px-4 py-1 focus:outline-none focus:ring-2 focus:ring-grey-500"
         />
       ) : (
-        <Tag className="text-gray-800 font-semibold">{text}</Tag>
+        <div className="flex space-x-3">
+          <p className="text-blue-200">{labelText}</p>
+          <Tag>{text}</Tag>
+        </div>
       )}
     </div>
   );
