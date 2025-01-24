@@ -25,6 +25,7 @@ interface Props {
  * <EditableText
  *   tag="h3"
  *   name="activity"
+ *   text = "activity"
  *   value={activityValue}
  *   isEditing={isEditing}
  *   onChange={handleChange}
@@ -55,7 +56,7 @@ export default function EditableText({
           min={formattedDate}
           autoComplete="off"
           autoCorrect="off"
-          className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border border-gray-300 rounded-lg py-2 px-8 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       ) : (
         <Tag className="text-gray-800 font-semibold">{text}</Tag>

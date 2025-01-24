@@ -25,7 +25,7 @@ interface Props {
 
 export default function StartPage({ activities, setActivities }: Props) {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-b from-slate-200 to-sky-900">
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-t from-slate-200 to-sky-900">
       <ActivityForm activities={activities} setActivities={setActivities} />
       <PageLink path="/activities" text="See my activites" />
     </div>

@@ -26,6 +26,7 @@ interface Props {
  * <EditableText
  *   tag="h3"
  *   name="activity"
+ *   text = "activity"
  *   value={activityValue}
  *   isEditing={isEditing}
  *   onChange={handleChange}
