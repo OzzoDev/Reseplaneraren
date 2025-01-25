@@ -1,3 +1,4 @@
+import { MAX_PAGE_ITEMS } from "../constants/constants";
 import { Activity } from "../types/types";
 
 export function generateID(activities: Activity[]): number {
@@ -43,4 +44,13 @@ export function sortActivities(sortOption: number, activities: Activity[]) {
 export function currentDate(): string {
   const today = new Date();
   return today.toISOString().split("T")[0];
+}
+
+export function calcPageCount(activities: Activity[], maxItems: number): number {
+  const visibleActivities = [...activities].filter((activity) => activity.isVisible);
+  return Math.ceil(visibleActivities.length / maxItems);
+}
+
+export function showActivity(index: number, page: number): boolean {
+  return index >= (page - 1) * MAX_PAGE_ITEMS && index < page * MAX_PAGE_ITEMS;
 }

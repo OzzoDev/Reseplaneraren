@@ -3,8 +3,10 @@ import ActivityList from "../components/ActivityList";
 import PageLink from "../components/PageLink";
 import Search from "../components/Search";
 import { Activity } from "../types/types";
-import { searchSuccess, sortActivities } from "../utils/utils";
+import { calcPageCount, searchSuccess, sortActivities } from "../utils/utils";
 import Sort from "../components/Sort";
+import ActivityListPaginator from "../components/ActivityListPaginator";
+import { MAX_PAGE_ITEMS } from "../constants/constants";
 
 interface Props {
   activities: Activity[];
@@ -35,6 +37,9 @@ export default function ActivityPage({
   setActivities,
 }: Props) {
   const [isSearchSuccessful, setIsSearchSuccessful] = useState<boolean>(searchSuccess(activities));
+  const [pageCount, setPageCount] = useState<number>(calcPageCount(activities, MAX_PAGE_ITEMS));
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [latestPaginatedPage, setLatestPaginatedPage] = useState<number>(1);
 
   useEffect(() => {
     setIsSearchSuccessful(searchSuccess(activities));
@@ -52,6 +57,12 @@ export default function ActivityPage({
     });
 
     setActivities(updatedActivities);
+
+    if (searchQurey) {
+      setCurrentPage(1);
+    } else {
+      setCurrentPage(latestPaginatedPage);
+    }
   };
 
   const handleSortItems = (value: number) => {
@@ -59,6 +70,17 @@ export default function ActivityPage({
     setActivities(sortedActivities);
     setSortOrder(value);
   };
+
+  useEffect(() => {
+    setPageCount(calcPageCount(activities, MAX_PAGE_ITEMS));
+  }, [activities]);
+
+  const handlePagination = (_: unknown, value: number) => {
+    setCurrentPage(value);
+    setLatestPaginatedPage(value);
+  };
+
+  const noActivities = activities.length === 0;
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-slate-200 to-sky-900">
@@ -80,9 +102,11 @@ export default function ActivityPage({
       <ActivityList
         activities={activities}
         sortOrder={sortOrder}
+        page={currentPage}
         isSearchSuccessful={isSearchSuccessful}
         setActivities={setActivities}
       />
+      {!noActivities && <ActivityListPaginator count={pageCount} onChange={handlePagination} />}
     </div>
   );
 }

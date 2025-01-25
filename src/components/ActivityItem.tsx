@@ -83,7 +83,7 @@ export default function ActivityItem({ activity, deleteActivity, editActivity }:
   return (
     <li
       ref={itemRef}
-      className="relative flex justify-between items-center p-4 py-10 border-b-[1px]">
+      className="relative flex justify-between items-center p-4 py-10 bg-gray-950 bg-opacity-40 mb-8 h-[120px]">
       <form onSubmit={handleEdit} className="flex items-center justify-between space-y-2 w-full">
         <EditablePriority
           isEditing={isEditing}

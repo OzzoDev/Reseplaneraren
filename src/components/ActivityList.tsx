@@ -1,10 +1,11 @@
 import { Activity } from "../types/types";
-import { sortActivities } from "../utils/utils";
+import { showActivity, sortActivities } from "../utils/utils";
 import ActivityItem from "./ActivityItem";
 
 interface Props {
   activities: Activity[];
   sortOrder: number;
+  page: number;
   isSearchSuccessful: boolean;
   setActivities: (activities: Activity[]) => void;
 }
@@ -31,6 +32,7 @@ interface Props {
 export default function ActivityList({
   activities,
   sortOrder,
+  page,
   isSearchSuccessful,
   setActivities,
 }: Props) {
@@ -67,10 +69,12 @@ export default function ActivityList({
     return <h2 className="text-5xl text-white m-auto">No matching activites!</h2>;
   }
 
-  const filteredActivities = activities.filter((activity) => activity.isVisible);
+  const filteredActivities = activities
+    .filter((activity) => activity.isVisible)
+    .filter((_, index) => showActivity(index, page));
 
   return (
-    <ul className="m-auto mt-[200px] w-full text-white bg-gray-700 bg-opacity-100">
+    <ul className="m-auto mt-[200px] w-full text-white grow">
       {filteredActivities.map((activity) => {
         return (
           <ActivityItem
