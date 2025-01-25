@@ -1,13 +1,12 @@
-import { Suspense, lazy } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { Activity } from "./types/types";
 import { ACTIVITES_KEY, SORT_ORDER } from "./constants/constants";
 import SkeletonLoader from "./components/SkeletonLoader";
-
-const StartPage = lazy(() => import("./pages/StartPage"));
-const ActivityPage = lazy(() => import("./pages/ActivityPage"));
+import { Suspense } from "react";
+import ActivityPage from "./pages/ActivityPage";
+import StartPage from "./pages/StartPage";
 
 function App() {
   const [activities, setActivities] = useLocalStorage<Activity[]>(ACTIVITES_KEY, []);
@@ -35,17 +34,11 @@ function App() {
   ];
 
   return (
-    <TransitionGroup>
-      <CSSTransition key={location.key} classNames="fade" timeout={500}>
-        <Suspense fallback={<SkeletonLoader />}>
-          <Routes location={location}>
-            {routes.map((route, index) => (
-              <Route key={index} path={route.path} element={route.element} />
-            ))}
-          </Routes>
-        </Suspense>
-      </CSSTransition>
-    </TransitionGroup>
+    <Routes location={location}>
+      {routes.map((route, index) => (
+        <Route key={index} path={route.path} element={route.element} />
+      ))}
+    </Routes>
   );
 }
 
