@@ -60,7 +60,7 @@ export default function ActivityForm({ activities, sortOrder, setActivities }: P
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col p-8 bg-white rounded-lg shadow-md m-auto max-w-lg w-full space-y-4 text-grey-700">
+      className="flex flex-col p-8 rounded-lg shadow-md m-auto max-w-lg w-full space-y-4 text-white bg-gray-950 bg-opacity-40">
       <h2 className="text-2xl font-semibold text-center">Add New Activity</h2>
       <ActivityInput
         labelText="Activity"

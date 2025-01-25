@@ -21,7 +21,7 @@ export default function Sort({ sortItems, sortOrder, onChange }: Props) {
       <select
         ref={selectRef}
         onChange={(event) => onChange(Number(event.target.value))}
-        className="p-2 border-0 bg-sky-700 focus:outline-none focus:ring-0">
+        className="p-2 border-0 bg-sky-700 focus:outline-none focus:ring-0 cursor-pointer">
         {sortItems.map((item, index) => (
           <option key={index} value={index}>
             {item}

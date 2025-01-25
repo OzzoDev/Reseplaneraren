@@ -122,13 +122,13 @@ export default function ActivityItem({ activity, deleteActivity, editActivity }:
         <div className=" flex space-x-2">
           <button
             type="submit"
-            className="bg-blue-500 text-white font-bold py-2 px-10 rounded hover:bg-blue-600 transition duration-200">
+            className="bg-blue-600 text-white font-bold py-2 px-10 rounded hover:bg-blue-700 transition duration-200">
             {isEditing ? <IoCheckmarkOutline /> : <FaRegEdit />}
           </button>
           <button
             type="button"
             onClick={handleDelete}
-            className="bg-red-500 text-white font-bold py-2 px-10 rounded hover:bg-red-600 transition duration-200">
+            className="bg-red-600 text-white font-bold py-2 px-10 rounded hover:bg-red-700 transition duration-200">
             <IoTrashOutline />
           </button>
         </div>

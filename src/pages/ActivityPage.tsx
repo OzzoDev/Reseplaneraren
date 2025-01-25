@@ -7,6 +7,7 @@ import { calcPageCount, searchSuccess, sortActivities } from "../utils/utils";
 import Sort from "../components/Sort";
 import ActivityListPaginator from "../components/ActivityListPaginator";
 import { MAX_PAGE_ITEMS } from "../constants/constants";
+import ClearActivitiesBtn from "../components/ClearActivitiesBtn";
 
 interface Props {
   activities: Activity[];
@@ -43,7 +44,12 @@ export default function ActivityPage({
 
   useEffect(() => {
     setIsSearchSuccessful(searchSuccess(activities));
+    setPageCount(calcPageCount(activities, MAX_PAGE_ITEMS));
   }, [activities]);
+
+  const clearAllActivites = () => {
+    setActivities([]);
+  };
 
   const handleSearchActivites = (searchQurey: string) => {
     const updatedActivities: Activity[] = activities.map((activity) => {
@@ -71,10 +77,6 @@ export default function ActivityPage({
     setSortOrder(value);
   };
 
-  useEffect(() => {
-    setPageCount(calcPageCount(activities, MAX_PAGE_ITEMS));
-  }, [activities]);
-
   const handlePagination = (_: unknown, value: number) => {
     setCurrentPage(value);
     setLatestPaginatedPage(value);
@@ -85,19 +87,22 @@ export default function ActivityPage({
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-slate-200 to-sky-900">
       <Search onChange={handleSearchActivites} />
-      <div className="flex space-x-5 mt-4 pl-2">
-        <PageLink path="/" text="Add activitiy" />
-        <Sort
-          sortItems={[
-            "Upcoming",
-            "Activity a-z",
-            "Place a-z",
-            "Priority high-low",
-            "Priority low-high",
-          ]}
-          sortOrder={sortOrder}
-          onChange={handleSortItems}
-        />
+      <div className="flex justify-between mt-4 px-2 w-full">
+        <div className="flex gap-x-4">
+          <PageLink path="/" text="Add activitiy" />
+          <Sort
+            sortItems={[
+              "Upcoming",
+              "Activity a-z",
+              "Place a-z",
+              "Priority high-low",
+              "Priority low-high",
+            ]}
+            sortOrder={sortOrder}
+            onChange={handleSortItems}
+          />
+        </div>
+        {!noActivities && <ClearActivitiesBtn onClick={clearAllActivites} />}
       </div>
       <ActivityList
         activities={activities}

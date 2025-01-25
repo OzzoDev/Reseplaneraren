@@ -59,7 +59,7 @@ export default function ActivityInput({
         id={name}
         value={value}
         onChange={handleChange}
-        className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 bg-transparent"
         autoCorrect="off"
         autoComplete="off"
         required

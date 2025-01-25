@@ -62,7 +62,7 @@ export default function EditableText({
           min={currentDate()}
           autoComplete="off"
           autoCorrect="off"
-          className="border border-gray-300 rounded-lg bg-transparent w-full text-white px-4 py-1 focus:outline-none focus:ring-2 focus:ring-grey-500"
+          className=".light-input border border-gray-300 rounded-lg bg-transparent w-full text-white px-4 py-1 focus:outline-none focus:ring-2 focus:ring-grey-500"
         />
       ) : (
         <div className="flex space-x-3">
