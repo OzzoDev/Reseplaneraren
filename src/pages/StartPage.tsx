@@ -2,7 +2,8 @@ import ActivityForm from "../components/ActivityForm";
 import { Activity } from "../types/types";
 import PageLink from "../components/PageLink";
 import ActivityCount from "../components/ActivityCount";
-import { motion } from "framer-motion";
+import { ACTIVITES_KEY, SORT_ORDER } from "../constants/constants";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 interface Props {
   activities: Activity[];
@@ -22,24 +23,22 @@ interface Props {
  * @example
  * <StartPage
  *   activities={activities}
- *   setActivities={setActivities}
+ *   setActivities={setActivities}rfc
  * />
  */
 
-export default function StartPage({ activities, sortOrder, setActivities }: Props) {
+// export default function StartPage({ activities, sortOrder, setActivities }: Props) {
+export default function StartPage() {
+  const [activities, setActivities] = useLocalStorage<Activity[]>(ACTIVITES_KEY, []);
+  const [sortOrder, setSortOrder] = useLocalStorage<number>(SORT_ORDER, 0);
+
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.8 }}>
-      <div className="flex flex-col min-h-screen bg-gradient-to-t from-slate-200 to-sky-900">
-        <div className="flex items-center space-x-7 pl-2 py-3 w-full">
-          <PageLink path="/activities" text="See my activites" />
-          <ActivityCount activites={activities} />
-        </div>
-        <ActivityForm activities={activities} setActivities={setActivities} sortOrder={sortOrder} />
+    <div className="grow flex flex-col">
+      <div className="flex items-center space-x-7 pl-2 py-3 w-full">
+        <PageLink path="/activities" text="See my activites" />
+        <ActivityCount activites={activities} />
       </div>
-    </motion.div>
+      <ActivityForm activities={activities} setActivities={setActivities} sortOrder={sortOrder} />
+    </div>
   );
 }

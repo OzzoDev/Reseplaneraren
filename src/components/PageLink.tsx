@@ -1,5 +1,5 @@
 import { GoArrowRight } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router";
 
 interface Props {
   text: string;

@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function ActivityCount({ activites }: Props) {
-  const [animationKey, setAnimationKey] = useState<number>(0);
+  const [animateCount, setAnimateCount] = useState<number>(0);
   const prevNumberOfActivities = useRef<number>(activites.length);
 
   const numberOfActivites = activites.length;
@@ -15,7 +15,7 @@ export default function ActivityCount({ activites }: Props) {
 
   useEffect(() => {
     if (prevNumberOfActivities.current !== activites.length) {
-      setAnimationKey((prev) => prev + 1);
+      setAnimateCount((prev) => prev + 1);
 
       prevNumberOfActivities.current = activites.length;
     }
@@ -23,9 +23,9 @@ export default function ActivityCount({ activites }: Props) {
 
   return (
     <div
-      key={animationKey}
+      key={animateCount}
       className={`flex flex-col justify-center items-center relative bg-sky-700 rounded-[10px] w-[46px] h-[46px] ${
-        animationKey > 0 ? "motion-preset-confetti" : ""
+        animateCount > 0 ? "motion-preset-confetti" : ""
       }`}>
       <RiCalendarTodoFill size={26} color="white" />
       <p
