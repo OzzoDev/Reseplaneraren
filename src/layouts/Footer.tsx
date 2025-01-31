@@ -1,5 +1,10 @@
-import React from "react";
-
 export default function Footer() {
-  return <footer>This is a footer</footer>;
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="flex justify-between p-2 bg-sky-900 text-white">
+      <p>&copy;{currentYear}</p>
+      <p>All rights reserved</p>
+    </footer>
+  );
 }

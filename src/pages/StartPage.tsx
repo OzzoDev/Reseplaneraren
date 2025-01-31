@@ -1,9 +1,7 @@
-import ActivityForm from "../components/ActivityForm";
 import { Activity } from "../types/types";
-import PageLink from "../components/PageLink";
-import ActivityCount from "../components/ActivityCount";
 import { ACTIVITES_KEY, SORT_ORDER } from "../constants/constants";
 import useLocalStorage from "../hooks/useLocalStorage";
+import TripForm from "../components/trip/TripForm";
 
 interface Props {
   activities: Activity[];
@@ -29,16 +27,20 @@ interface Props {
 
 // export default function StartPage({ activities, sortOrder, setActivities }: Props) {
 export default function StartPage() {
-  const [activities, setActivities] = useLocalStorage<Activity[]>(ACTIVITES_KEY, []);
+  const [activities, setActivities] = useLocalStorage<Activity[]>(
+    ACTIVITES_KEY,
+    []
+  );
   const [sortOrder, setSortOrder] = useLocalStorage<number>(SORT_ORDER, 0);
 
   return (
-    <div className="grow flex flex-col">
-      <div className="flex items-center space-x-7 pl-2 py-3 w-full">
-        <PageLink path="/activities" text="See my activites" />
-        <ActivityCount activites={activities} />
-      </div>
-      <ActivityForm activities={activities} setActivities={setActivities} sortOrder={sortOrder} />
-    </div>
+    <TripForm />
+    // <div className="grow flex flex-col">
+    //   <div className="flex items-center space-x-7 pl-2 py-3 w-full">
+    //     <PageLink path="/activities" text="See my activites" />
+    //     <ActivityCount activites={activities} />
+    //   </div>
+    //   <ActivityForm activities={activities} setActivities={setActivities} sortOrder={sortOrder} />
+    // </div>
   );
 }

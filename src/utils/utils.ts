@@ -1,11 +1,11 @@
 import { MAX_PAGE_ITEMS } from "../constants/constants";
-import { Activity } from "../types/types";
+import { Activity, Trip } from "../types/types";
 
-export function generateID(activities: Activity[]): number {
-  if (activities.length === 0) {
+export function generateID(array: Activity[]|Trip[]): number {
+  if (array.length === 0) {
     return 0;
   } else {
-    return Math.max(...activities.map((activity) => activity.id)) + 1;
+    return Math.max(...array.map((item) => item.id)) + 1;
   }
 }
 
@@ -15,6 +15,10 @@ export function searchSuccess(activities: Activity[]): boolean {
 
 export function isNewActivity(activitiy: Activity, activities: Activity[]): boolean {
   return !activities.some((act) => act.activity.toLowerCase() === activitiy.activity.toLowerCase());
+}
+
+export function isNewTrip(trip: Trip, trips: Trip[]): boolean {
+  return !trips.some((t) => t.from.toLowerCase() === trip.from.toLowerCase()&&t.to.toLowerCase() === trip.to.toLowerCase());
 }
 
 export function sortActivities(sortOption: number, activities: Activity[]) {

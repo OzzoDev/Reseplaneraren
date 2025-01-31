@@ -1,3 +1,11 @@
+export type Trip = {
+  id:number; 
+  from:string;
+  to:string;
+  date:string;
+  activities:Activity[];
+}
+
 export type Activity = {
   id: number;
   activity: string;
