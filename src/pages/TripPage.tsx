@@ -4,7 +4,7 @@ import { Trip } from "../types/types";
 import useTripManager from "../hooks/useTripManager";
 import TripListPaginator from "../components/trip/TripListPaginator";
 import Search from "../components/Search";
-import { calcPageCount, showOnPagination } from "../utils/utils";
+import { calcPageCount } from "../utils/utils";
 import TripList from "../components/trip/TripList";
 import DangerBtn from "../components/btn/DangerBtn";
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -19,12 +19,10 @@ export default function TripPage() {
   const [pageCount, setPageCount] = useState<number>(calcPageCount(trips, MAX_PAGE_ITEMS));
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [latestPaginatedPage, setLatestPaginatedPage] = useState<number>(1);
-  const [filteredTrips, setFilteredTrips] = useState<Trip[]>(
-    trips.filter((_, index) => showOnPagination(index, currentPage))
-  );
+  const [filteredTrips, setFilteredTrips] = useState<Trip[]>(trips);
 
   useEffect(() => {
-    setPageCount(calcPageCount(trips, MAX_PAGE_ITEMS));
+    setPageCount(calcPageCount(filteredTrips, MAX_PAGE_ITEMS));
   }, [trips, filteredTrips]);
 
   const handleSearchTrips = (searchQuery: string) => {

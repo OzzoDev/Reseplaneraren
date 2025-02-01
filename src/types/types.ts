@@ -20,3 +20,10 @@ export type Priority = {
   prio: number;
   color: string;
 };
+
+export type Country = {
+  name: {
+    common: string;
+  };
+  capital: string;
+};

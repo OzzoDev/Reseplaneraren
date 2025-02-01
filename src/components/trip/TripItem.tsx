@@ -3,12 +3,13 @@ import { useNavigate } from "react-router";
 import { PiGear } from "react-icons/pi";
 import PrimaryBtn from "../btn/PrimaryBtn";
 import TripProperty from "./TripProperty";
+import React from "react";
 
 interface Props {
   trip: Trip;
 }
 
-export default function TripItem({ trip }: Props) {
+function TripItem({ trip }: Props) {
   const navigate = useNavigate();
 
   const navigateToTripDetails = () => {
@@ -30,3 +31,5 @@ export default function TripItem({ trip }: Props) {
     </li>
   );
 }
+
+export default React.memo(TripItem);

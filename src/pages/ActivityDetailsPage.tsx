@@ -28,11 +28,13 @@ export default function ActivityDetailsPage() {
   };
   return (
     <div className="flex flex-col space-y-20 pt-10">
-      <PrimaryBtn
-        btnText="Go back"
-        onClick={handleNavigateBack}
-        children={<GoArrowRight size={24} />}
-      />
+      <div className="w-fit">
+        <PrimaryBtn
+          btnText="Go back"
+          onClick={handleNavigateBack}
+          children={<GoArrowRight size={24} />}
+        />
+      </div>
       <ActivityItem trip={trip} activity={activity} isEditable={true} />
     </div>
   );

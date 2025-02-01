@@ -8,9 +8,9 @@ interface Props {
 }
 
 export default function TripList({ trips, page }: Props) {
-  const noActivities = trips.length === 0;
+  const noTrips = trips.length === 0;
 
-  if (noActivities) {
+  if (noTrips) {
     return <h2 className="text-5xl text-white m-auto">No trips planned yet!</h2>;
   }
 

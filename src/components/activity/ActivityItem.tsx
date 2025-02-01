@@ -10,6 +10,7 @@ import { PiGear } from "react-icons/pi";
 import DangerBtn from "../btn/DangerBtn";
 import EditableDate from "./EditableDate";
 import EditableText from "./EditableText";
+import React from "react";
 
 interface Props {
   trip: Trip;
@@ -17,7 +18,7 @@ interface Props {
   isEditable?: boolean;
 }
 
-export default function ActivityItem({ trip, activity, isEditable }: Props) {
+function ActivityItem({ trip, activity, isEditable }: Props) {
   const navigate = useNavigate();
   const { editActivity, deleteActivity } = useTripManager();
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -117,3 +118,5 @@ export default function ActivityItem({ trip, activity, isEditable }: Props) {
     </li>
   );
 }
+
+export default React.memo(ActivityItem);

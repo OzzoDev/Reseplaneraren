@@ -5,6 +5,8 @@ export const TRIPS_KEY = "trips";
 export const ACTIVITES_KEY = "activites";
 export const SORT_ORDER = "sortOrder";
 
+export const RESTCOUNTRIES_URL = "https://restcountries.com/v3.1/all";
+
 export const MAX_PAGE_ITEMS = 3;
 
 export const priorityMap: Priority[] = [
