@@ -21,7 +21,7 @@ export default function CountAnimation({ value, children }: Props) {
   return (
     <>
       <p
-        className={`${badgeBgColor} absolute top-[-10px] right-[-16px] text-center text-[0.8rem] text-white w-[1.4rem] h-[1.4rem] flex justify-center items-center rounded-full ${
+        className={`${badgeBgColor} absolute top-[-10px] right-[-20px] text-center text-[0.8rem] text-white w-[1.4rem] h-[1.4rem] flex justify-center items-center rounded-full ${
           animateCount > 0 ? "motion-preset-confetti" : ""
         }`}>
         {value}
