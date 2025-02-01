@@ -1,10 +1,11 @@
 export type Trip = {
-  id:number; 
-  from:string;
-  to:string;
-  date:string;
-  activities:Activity[];
-}
+  id: number;
+  from: string;
+  to: string;
+  date: string;
+  activities: Activity[];
+  isVisible: boolean;
+};
 
 export type Activity = {
   id: number;

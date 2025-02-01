@@ -6,6 +6,7 @@ interface Props {
    *
    * @param {string} searchQuery - The current search query entered by the user.
    */
+  placeholder: string;
   onChange: (searchQuery: string) => void;
 }
 
@@ -20,7 +21,7 @@ interface Props {
  * @example
  * <Search onChange={(query) => console.log(query)} />
  */
-export default function Search({ onChange }: Props) {
+export default function Search({ placeholder, onChange }: Props) {
   return (
     <div className="w-full text-white">
       <div className="relative">
@@ -31,7 +32,7 @@ export default function Search({ onChange }: Props) {
           type="text"
           onChange={(event) => onChange(event.target.value.toLowerCase())}
           className="block w-full p-4 ps-10 text-sm bg-sky-700 focus:outline-none dark:placeholder-white"
-          placeholder="Search activities"
+          placeholder={placeholder}
           required
         />
       </div>

@@ -7,7 +7,7 @@ interface Props {
 
 export default function NavigationLink({ linkText, path }: Props) {
   return (
-    <NavLink to={path} className="hover:text-gray-400 ">
+    <NavLink to={path} className="relative hover:text-gray-400 ">
       {linkText}
     </NavLink>
   );

@@ -1,4 +1,4 @@
-import { Priority } from "../types/types";
+import { Priority } from "../../types/types";
 
 interface Props {
   priorities: Priority[];

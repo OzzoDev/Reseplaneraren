@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { currentDate } from "../utils/utils";
+import { currentDate } from "../../utils/utils";
 
 interface Props {
   tag: React.ElementType;
@@ -10,30 +10,7 @@ interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-/**
- * A component that displays editable text.
- * Renders an input field when in editing mode and the specified tag when not.
- *
- * @param {Props} props - The properties for the component.
- * @param {React.ElementType} props.tag - The HTML element type to render when not editing.
- * @param {string} props.name - The name attribute for the input field.
- * @param {string} props.text - The current text of the editable text.
- * @param {boolean} props.isEditing - Flag to determine if the component is in editing mode.
- * @param {(e: React.ChangeEvent<HTMLInputElement>) => void} props.onChange - Function to handle input changes.
- *
- * @returns {JSX.Element} The rendered editable text component.
- *
- * @example
- * <EditableText
- *   tag="h3"
- *   name="activity"
- *   text = "activity"
- *   isEditing={isEditing}
- *   onChange={handleChange}
- * />
- */
-
-export default function EditableText({
+export default function EditableDate({
   tag: Tag,
   name,
   text,
@@ -67,6 +44,7 @@ export default function EditableText({
       ) : (
         <div className="flex space-x-3">
           <p className="text-blue-200">{labelText}</p>
+          <p>-</p>
           <Tag>{text}</Tag>
         </div>
       )}

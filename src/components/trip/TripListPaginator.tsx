@@ -6,7 +6,7 @@ interface Props {
   onChange: (event: unknown, value: number) => void;
 }
 
-export default function ActivityListPaginator({ count, onChange }: Props) {
+export default function TripListPaginator({ count, onChange }: Props) {
   return (
     <Stack spacing={2} className="m-auto mb-[100px]">
       <Pagination

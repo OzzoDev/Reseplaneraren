@@ -1,7 +1,7 @@
 import { Activity, Priority, Trip } from "../types/types";
 import { currentDate } from "../utils/utils";
 
-export const TRIPS_KEY = "trips"
+export const TRIPS_KEY = "trips";
 export const ACTIVITES_KEY = "activites";
 export const SORT_ORDER = "sortOrder";
 
@@ -22,10 +22,11 @@ export const defaultActivity: Activity = {
   priority: priorityMap[0],
 };
 
-export const defaultTrip:Trip = {
-  id:-1,
-  to:"",
-  from:"",
-  date:"", 
-  activities:[]
-}
+export const defaultTrip: Trip = {
+  id: -1,
+  to: "",
+  from: "",
+  date: currentDate(),
+  activities: [],
+  isVisible: true,
+};

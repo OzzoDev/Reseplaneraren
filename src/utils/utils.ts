@@ -1,16 +1,16 @@
 import { MAX_PAGE_ITEMS } from "../constants/constants";
 import { Activity, Trip } from "../types/types";
 
-export function generateID(array: Activity[]|Trip[]): number {
+export function generateID(array: Activity[] | Trip[]): number {
   if (array.length === 0) {
-    return 0;
+    return 1;
   } else {
     return Math.max(...array.map((item) => item.id)) + 1;
   }
 }
 
-export function searchSuccess(activities: Activity[]): boolean {
-  return activities.some((activitiy) => activitiy.isVisible);
+export function searchSuccess(array: Activity[] | Trip[]): boolean {
+  return array.some((item) => item.isVisible);
 }
 
 export function isNewActivity(activitiy: Activity, activities: Activity[]): boolean {
@@ -18,7 +18,11 @@ export function isNewActivity(activitiy: Activity, activities: Activity[]): bool
 }
 
 export function isNewTrip(trip: Trip, trips: Trip[]): boolean {
-  return !trips.some((t) => t.from.toLowerCase() === trip.from.toLowerCase()&&t.to.toLowerCase() === trip.to.toLowerCase());
+  return !trips.some(
+    (t) =>
+      t.from.toLowerCase() === trip.from.toLowerCase() &&
+      t.to.toLowerCase() === trip.to.toLowerCase()
+  );
 }
 
 export function sortActivities(sortOption: number, activities: Activity[]) {
@@ -50,11 +54,11 @@ export function currentDate(): string {
   return today.toISOString().split("T")[0];
 }
 
-export function calcPageCount(activities: Activity[], maxItems: number): number {
-  const visibleActivities = [...activities].filter((activity) => activity.isVisible);
-  return Math.ceil(visibleActivities.length / maxItems);
+export function calcPageCount(array: Trip[] | Activity[], maxItems: number): number {
+  const visibleItems = [...array].filter((item) => item.isVisible);
+  return Math.ceil(visibleItems.length / maxItems);
 }
 
-export function showActivity(index: number, page: number): boolean {
+export function showOnPagination(index: number, page: number): boolean {
   return index >= (page - 1) * MAX_PAGE_ITEMS && index < page * MAX_PAGE_ITEMS;
 }

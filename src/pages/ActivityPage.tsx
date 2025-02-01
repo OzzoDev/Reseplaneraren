@@ -1,121 +1,72 @@
-import { useEffect, useState } from "react";
-import ActivityList from "../components/ActivityList";
-import PageLink from "../components/PageLink";
+import { useState } from "react";
+import ActivityList from "../components/activity/ActivityList";
 import Search from "../components/Search";
 import { Activity } from "../types/types";
-import { calcPageCount, searchSuccess, sortActivities } from "../utils/utils";
-import Sort from "../components/Sort";
-import ActivityListPaginator from "../components/ActivityListPaginator";
-import { ACTIVITES_KEY, MAX_PAGE_ITEMS, SORT_ORDER } from "../constants/constants";
-import ClearActivitiesBtn from "../components/ClearActivitiesBtn";
-import useLocalStorage from "../hooks/useLocalStorage";
+import useTripManager from "../hooks/useTripManager";
+import { FaRegTrashAlt } from "react-icons/fa";
+import DangerBtn from "../components/btn/DangerBtn";
+import { useNavigate, useParams } from "react-router";
+import NotFoundPage from "./NotFoundPage";
+import PrimaryBtn from "../components/btn/PrimaryBtn";
+import { GoArrowRight } from "react-icons/go";
 
-interface Props {
-  activities: Activity[];
-  sortOrder: number;
-  setSortOrder: (sortOrder: number) => void;
-  setActivities: (activities: Activity[]) => void;
-}
-
-/**
- * A page component that displays a list of activities.
- *
- * @param {Props} props - The properties for the component.
- * @param {Activity[]} props.activities - The current array of activities.
- *
- * @returns {JSX.Element} The rendered activity page.
- *
- * @example
- * <ActivityPage
- *   activities={activities}
- *   setActivities={setActivities}
- * />
- */
-
-// export default function ActivityPage({
-//   activities,
-//   sortOrder,
-//   setSortOrder,
-//   setActivities,
-// }: Props) {
 export default function ActivityPage() {
-  const [activities, setActivities] = useLocalStorage<Activity[]>(ACTIVITES_KEY, []);
-  const [sortOrder, setSortOrder] = useLocalStorage<number>(SORT_ORDER, 0);
-  const [isSearchSuccessful, setIsSearchSuccessful] = useState<boolean>(searchSuccess(activities));
-  const [pageCount, setPageCount] = useState<number>(calcPageCount(activities, MAX_PAGE_ITEMS));
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [latestPaginatedPage, setLatestPaginatedPage] = useState<number>(1);
+  const navigate = useNavigate();
+  const { getTrip } = useTripManager();
+  const { id } = useParams();
+  const trip = getTrip(Number(id));
 
-  useEffect(() => {
-    setIsSearchSuccessful(searchSuccess(activities));
-    setPageCount(calcPageCount(activities, MAX_PAGE_ITEMS));
-  }, [activities]);
+  if (!trip) {
+    return <NotFoundPage />;
+  }
 
-  const clearAllActivites = () => {
-    setActivities([]);
-  };
+  const { deleteActivities } = useTripManager();
+  const [filteredActivities, setFilteredActivities] = useState<Activity[]>(trip.activities);
 
-  const handleSearchActivites = (searchQurey: string) => {
-    const updatedActivities: Activity[] = activities.map((activity) => {
-      const normalizedActivity = activity.activity.toLowerCase();
-      if (normalizedActivity.includes(searchQurey)) {
-        activity.isVisible = true;
-      } else {
-        activity.isVisible = false;
-      }
-      return activity;
+  const handleSearchActivites = (searchQuery: string) => {
+    const updatedActivities: Activity[] = filteredActivities.map((activity) => {
+      const act = activity.activity.toLowerCase();
+
+      return {
+        ...activity,
+        isVisible: act.includes(searchQuery.toLowerCase()),
+      };
     });
 
-    setActivities(updatedActivities);
-
-    if (searchQurey) {
-      setCurrentPage(1);
-    } else {
-      setCurrentPage(latestPaginatedPage);
-    }
+    setFilteredActivities(updatedActivities);
   };
 
-  const handleSortItems = (value: number) => {
-    const sortedActivities = sortActivities(value, activities);
-    setActivities(sortedActivities);
-    setSortOrder(value);
+  const handleDeleteActivities = () => {
+    setFilteredActivities([]);
+    deleteActivities(trip);
   };
 
-  const handlePagination = (_: unknown, value: number) => {
-    setCurrentPage(value);
-    setLatestPaginatedPage(value);
+  const navigateToActivityForm = () => {
+    navigate(`/trips/trip/${id}/addactivity`);
   };
 
-  const noActivities = activities.length === 0;
+  const noActivities = filteredActivities.length === 0;
 
   return (
     <div className="grow flex flex-col">
-      <Search onChange={handleSearchActivites} />
+      <Search placeholder="Search activities" onChange={handleSearchActivites} />
       <div className="flex justify-between mt-4 px-2 w-full">
         <div className="flex gap-x-4">
-          <PageLink path="/" text="Add activitiy" />
-          <Sort
-            sortItems={[
-              "Upcoming",
-              "Activity a-z",
-              "Place a-z",
-              "Priority high-low",
-              "Priority low-high",
-            ]}
-            sortOrder={sortOrder}
-            onChange={handleSortItems}
+          <PrimaryBtn
+            btnText="Add activitiy"
+            onClick={navigateToActivityForm}
+            children={<GoArrowRight size={24} />}
           />
         </div>
-        {!noActivities && <ClearActivitiesBtn onClick={clearAllActivites} />}
+        {!noActivities && (
+          <DangerBtn
+            btnText="Delete activities"
+            icon={<FaRegTrashAlt />}
+            onClick={handleDeleteActivities}
+          />
+        )}
       </div>
-      <ActivityList
-        activities={activities}
-        sortOrder={sortOrder}
-        page={currentPage}
-        isSearchSuccessful={isSearchSuccessful}
-        setActivities={setActivities}
-      />
-      {!noActivities && <ActivityListPaginator count={pageCount} onChange={handlePagination} />}
+      <ActivityList trip={trip} activities={filteredActivities} />
     </div>
   );
 }

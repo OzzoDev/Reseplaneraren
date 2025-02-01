@@ -37,5 +37,5 @@ export default function useLocalStorage<T>(key: string, initialValue: T) {
     }
   }, [key, storedValue]);
 
-  return [storedValue, setStoredValue] as const;
+  return { storedValue, setStoredValue };
 }

@@ -1,6 +1,6 @@
-import { Priority } from "../types/types";
+import { priorityMap } from "../../constants/constants";
+import { Priority } from "../../types/types";
 import PrioritySelector from "./PrioritySelector";
-import { priorityMap } from "../constants/constants";
 
 interface Props {
   isEditing: boolean;
